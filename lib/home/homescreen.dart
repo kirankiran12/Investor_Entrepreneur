@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
+import 'package:investorentrepreneur/home/filter/filterscreen.dart';
 
 import 'package:investorentrepreneur/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/home/videos/videos.dart';
@@ -92,7 +93,13 @@ class HomeScreenContent extends StatelessWidget {
                   radius: 25,
                   backgroundColor: Colors.grey[200],
                   child: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                       Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const  Filterscreen()),
+                    );
+                    },
                     icon: Icon(
                       Icons.add,
                     ),
