@@ -4,12 +4,14 @@ import 'package:investorentrepreneur/home/filter/filterscreen.dart';
 
 import 'package:investorentrepreneur/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/home/videos/videos.dart';
+import 'package:investorentrepreneur/screen/event/eventHome.dart';
 import 'package:investorentrepreneur/screen/podcast/podcast.dart';
 import 'package:investorentrepreneur/widget/bottom%20_navigationbar.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
+
 
   @override
   State<Homescreen> createState() => _HomescreenState();
@@ -22,7 +24,7 @@ class _HomescreenState extends State<Homescreen> {
     HomeScreenContent(),
     PodcastScreenContent(),
   //  Center(child: PodcastScreen()),
-    Center(child: Text('Events')),
+  EventScreenContent(),
     Center(child: Text('Jobs')),
     Center(child: Text('Profile')),
   ];

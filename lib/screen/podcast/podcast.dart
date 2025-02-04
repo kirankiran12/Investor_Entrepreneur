@@ -28,7 +28,7 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
     
-    // Filter videos based on search
+    
     List<Map<String, String>> filteredVideos = _videos
         .where((video) => video['category']!.toLowerCase().contains(_searchQuery))
         .toList();
@@ -38,7 +38,7 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Section
+          
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -70,7 +70,7 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
           
           const SizedBox(height: 20),
 
-          // Search Bar
+          
           Container(
             height: 50,
             padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -95,7 +95,7 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
 
           const SizedBox(height: 40),
           
-          // Recently Played Section
+          
           _buildSectionTitle("Recently Played"),
           _buildVideoList(filteredVideos),
 

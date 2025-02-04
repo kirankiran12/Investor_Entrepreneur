@@ -21,7 +21,7 @@ class GradientOutlinedButton extends StatelessWidget {
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(50),
       ),
       padding: EdgeInsets.all(2), // Thickness of the border
       child: ElevatedButton(
@@ -30,7 +30,7 @@ class GradientOutlinedButton extends StatelessWidget {
           backgroundColor: Colors.white, // White button background
           elevation: 0, // Remove shadow
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
+            borderRadius: BorderRadius.circular(100),
           ),
         ),
         child: ShaderMask(

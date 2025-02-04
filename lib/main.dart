@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/screen/podcast/podcastcategory.dart';
+
 
 import 'package:investorentrepreneur/splashscreen/splashscreen.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const Splashscreen(),
+      home:  Splashscreen(),
     );
   }
 }
