@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/home/map/videos.dart';
+import 'package:investorentrepreneur/screen/home/map/videos.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
 class PodcastCategory extends StatefulWidget {

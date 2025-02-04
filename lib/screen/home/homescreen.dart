@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/home/filter/filterscreen.dart';
-
-import 'package:investorentrepreneur/home/mapscreen/map.dart';
-import 'package:investorentrepreneur/home/videos/videos.dart';
+import 'package:investorentrepreneur/screen/home/filter/screen/filterscreen.dart';
+import 'package:investorentrepreneur/screen/home/map/videos.dart';
+import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/screen/podcast/podcast.dart';
 import 'package:investorentrepreneur/widget/bottom%20_navigationbar.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
