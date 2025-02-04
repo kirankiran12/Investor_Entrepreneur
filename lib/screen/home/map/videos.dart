@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/home/reviews/createreviews.dart';
+import 'package:investorentrepreneur/screen/home/reviews/createreviews.dart';
+
+// import 'package:investorentrepreneur/home/filter/filterscreen.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:video_player/video_player.dart';
 
@@ -115,7 +117,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
                         _sideIcon(Icons.reviews_outlined, "Reviews", context,
                             _showReviewBottomSheet),
                         SizedBox(height: 20),
-                        _sideIcon(Icons.share, "Share", context, () {}),
+                        _sideIcon(Icons.share, "Share", context, (){}),
                       ],
                     ),
                   ),
@@ -372,12 +374,10 @@ class _ReelsScreenState extends State<ReelsScreen> {
                         SizedBox(height: 10),
                         Column(
                           children: [
-                            Container(
-                              margin: EdgeInsets.only(left: 130),
+                            Container(margin: EdgeInsets.only(left: 130),
                               child: Text("Reviews",
                                   style: TextStyle(
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.bold)),
+                                      fontSize: 25, fontWeight: FontWeight.bold)),
                             ),
                           ],
                         ),
@@ -426,7 +426,7 @@ class _ReelsScreenState extends State<ReelsScreen> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          const createreviews()),
+                                          const CreaterViews()),
                                 );
                               },
                               child: const Text(
