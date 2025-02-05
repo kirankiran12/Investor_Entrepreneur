@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/home/filter/filterscreen.dart';
-
-import 'package:investorentrepreneur/home/mapscreen/map.dart';
-import 'package:investorentrepreneur/home/videos/videos.dart';
 import 'package:investorentrepreneur/screen/event/eventHome.dart';
+import 'package:investorentrepreneur/screen/home/filter/screen/filterscreen.dart';
+import 'package:investorentrepreneur/screen/home/map/videos.dart';
+import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
+import 'package:investorentrepreneur/screen/jobs/screen/jobs_screen.dart';
 import 'package:investorentrepreneur/screen/podcast/podcast.dart';
 import 'package:investorentrepreneur/widget/bottom%20_navigationbar.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
@@ -25,7 +25,7 @@ class _HomescreenState extends State<Homescreen> {
     PodcastScreenContent(),
   //  Center(child: PodcastScreen()),
   EventScreenContent(),
-    Center(child: Text('Jobs')),
+    JobsScreen(),
     Center(child: Text('Profile')),
   ];
 
@@ -99,7 +99,7 @@ class HomeScreenContent extends StatelessWidget {
                        Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const  Filterscreen()),
+                          builder: (context) =>   Filterscreen()),
                     );
                     },
                     icon: Icon(

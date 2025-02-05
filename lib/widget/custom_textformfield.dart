@@ -3,9 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 
-
-
-
 class CustomTextFormField extends StatelessWidget {
   final int? maxLines;
   final int? maxLength;

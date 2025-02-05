@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/screen/event/ticket.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
@@ -191,11 +190,11 @@ class _CheckoutState extends State<Checkout> {
                   Center(
                     child: CustomElevatedButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Ticket()),
-                        );
+                        // Navigator.push(
+                        //   context,
+                        //   MaterialPageRoute(
+                        //       builder: (context) => Ticket()),
+                        // );
                       },
                       text: r'Buy Ticket-$35.00',
                     ),

@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/home/map/videos.dart';
-import 'package:investorentrepreneur/home/mapscreen/map.dart';
+import 'package:investorentrepreneur/screen/home/map/videos.dart';
+import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
 class PodcastScreenContent extends StatefulWidget {

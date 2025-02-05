@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 
-// ignore: camel_case_types
-class createreviews extends StatefulWidget {
-  const createreviews({super.key});
+class CreaterViews extends StatefulWidget {
+  const CreaterViews({super.key});
 
   @override
-  State<createreviews> createState() => _createreviewsState();
+  State<CreaterViews> createState() => _CreaterViewsState();
 }
 
 // ignore: camel_case_types
-class _createreviewsState extends State<createreviews> {
+class _CreaterViewsState extends State<CreaterViews> {
   final TextEditingController _textcontroller = TextEditingController();
   int _starRating = 0;
 
