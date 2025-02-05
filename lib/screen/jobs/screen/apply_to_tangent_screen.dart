@@ -21,7 +21,11 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
             children: [
               Row(
                 children: [
-                  Icon(Icons.arrow_back_ios),
+                  GestureDetector(
+                      onTap: (){
+
+                      },
+                      child: Icon(Icons.arrow_back_ios)),
                   Text('Apply to tangent'),
                 ],
               ),

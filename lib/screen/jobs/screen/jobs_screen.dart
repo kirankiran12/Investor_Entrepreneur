@@ -340,6 +340,7 @@ class _JobsScreenState extends State<JobsScreen> {
                     customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
                     SizedBox(height: 15,),
                     CustomElevatedButton(onPressed: (){
+                      Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder:  (context) => ApplyToTangentScreen(),));
                     }, text: 'Apply Now'),
                   ],
