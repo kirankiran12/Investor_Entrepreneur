@@ -83,46 +83,54 @@ class _EventScreenContentState extends State<EventScreenContent> {
               ),
             ),
             const SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: List.generate(_tabs.length, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedTab = index;
-                    });
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: _selectedTab == index
-                          ? LinearGradient(colors: [
-                              Colors.blue,
-                              Colors.purple,
-                              Colors.red,
-                              Colors.orange
-                            ])
-                          : null,
-                      color: _selectedTab == index ? null : Colors.grey[300],
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          _tabs[index],
-                          style: TextStyle(
-                            color: _selectedTab == index
-                                ? Colors.white
-                                : Colors.black,
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(_tabs.length, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedTab = index;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: _selectedTab == index
+                            ? LinearGradient(colors: [
+                                Colors.blue,
+                                Colors.purple,
+                                Colors.red,
+                                Colors.orange
+                              ])
+                            : null,
+                        color: _selectedTab == index ? null : Colors.grey[300],
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            _tabs[index],
+                            style: TextStyle(
+                              color: _selectedTab == index
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
                           ),
-                        ),
-                        if (index != 0)
-                          Icon(Icons.arrow_drop_down, color: Colors.black),
-                      ],
+                          if (index != 0)
+                            Icon(Icons.arrow_drop_down,
+                                color: _selectedTab == index
+                                    ? Colors.white
+                                    : Colors.black),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -162,23 +170,21 @@ class _EventScreenContentState extends State<EventScreenContent> {
                 ],
               ),
             ),
-            SizedBox(height: 10,),
-SizedBox(
-  height: 250,
-  child: ListView(
-    scrollDirection: Axis.horizontal,
-    children: [
-       _buildEventCard('assets/images/business.jpeg', 'Business',
+            SizedBox(
+              height: 20,
+            ),
+            SizedBox(
+              height: 250,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  _buildEventCard('assets/images/business.jpeg', 'Business',
                       'Feb 10, 2025'),
-                  _buildEventCard(
-                      'assets/images/technology.jpeg', 'Technology', 'Mar 15, 2025'),
-    ],
-  ),
-)
-
-
-
-
+                  _buildEventCard('assets/images/technology.jpeg', 'Technology',
+                      'Mar 15, 2025'),
+                ],
+              ),
+            )
           ],
         ),
       ),
@@ -252,8 +258,8 @@ SizedBox(
               padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.7),
-                borderRadius:
-                    BorderRadius.vertical(bottom: Radius.circular(15),top: Radius.circular(15)),
+                borderRadius: BorderRadius.vertical(
+                    bottom: Radius.circular(15), top: Radius.circular(15)),
               ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -275,11 +281,11 @@ SizedBox(
                     children: [
                       ElevatedButton(
                         onPressed: () {
-                           Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Eventdetail()),
-                      );
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Eventdetail()),
+                          );
                         },
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.white.withOpacity(0.3)),
