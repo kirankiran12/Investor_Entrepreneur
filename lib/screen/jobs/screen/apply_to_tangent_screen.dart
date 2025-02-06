@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
+import 'package:investorentrepreneur/screen/jobs/screen/job_apply_screen.dart';
 import 'package:investorentrepreneur/widget/outlinegradientbutton.dart';
 
 class ApplyToTangentScreen extends StatefulWidget {
@@ -10,9 +11,31 @@ class ApplyToTangentScreen extends StatefulWidget {
 }
 
 class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
+  String selectedFilterNavBar = "Discard";
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      bottomNavigationBar: BottomAppBar(
+        color: Colors.white,
+        elevation: 10,
+        child: Container(
+          height: 60,
+          decoration: BoxDecoration(
+              color: Colors.white
+          ),
+          padding: EdgeInsets.symmetric(horizontal: 40),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(child: _buildFilterButtonNavBar("Discard",height: 55,width: double.infinity)),
+              SizedBox(width: 10,),
+              Expanded(child: _buildFilterButtonNavBar("Apply",height: 55,width: double.infinity,onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => JobApplyScreen(),));
+              })),
+            ],
+          ),
+        ),
+      ),
       body: SafeArea(
         child: SingleChildScrollView(
           padding: EdgeInsets.all(18),
@@ -23,14 +46,15 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
                 children: [
                   GestureDetector(
                       onTap: (){
-
+                        Navigator.pop(context);
                       },
-                      child: Icon(Icons.arrow_back_ios)),
-                  Text('Apply to tangent'),
+                      child: Icon(Icons.arrow_back_ios,size: 18,)),
+                  SizedBox(width: 2,),
+                  Text('Apply to tangent',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
                 ],
               ),
               SizedBox(height: 15,),
-              Text('Please fill out the from to apply'),
+              Text('Please fill out the from to apply',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
               TextFormField(
                 decoration: InputDecoration(
                   label: Text('First name'),
@@ -70,10 +94,10 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
                   color: AppColor.gryColor.withValues(alpha: (0.8 * 255).toDouble()),
                   borderRadius: BorderRadius.circular(20)
                 ),
-                child: Center(child: Text('Upload resume')),
+                child: Center(child: Text('Upload resume',style: TextStyle(color: Colors.blue),)),
               ),
               SizedBox(height: 16,),
-              Text('Addition Details'),
+              Text('Addition Details',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
               TextFormField(
                 decoration: InputDecoration(
                   label: Text('Where do you live?'),
@@ -86,8 +110,47 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
                   labelStyle: TextStyle(fontSize: 13)
                 ),
               ),
-              GradientOutlinedButton(onPressed: () { },text: 'Discard',),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+  Widget _buildFilterButtonNavBar(String filter,{double? height, double? width, double? borderRadius, VoidCallback? onTap} ) {
+    bool isSelected = selectedFilterNavBar == filter;
+
+    return GestureDetector(
+      onTap: () {
+        onTap?.call();
+        setState(() {
+          selectedFilterNavBar = filter; // Update UI when a tab is clicked
+        });
+      },
+      child: Container(
+        height: 60,
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30),
+          gradient: isSelected
+              ? LinearGradient(
+            colors: [
+              Colors.blue,
+              Colors.purple,
+              Colors.red,
+              Colors.orange
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          )
+              : null,
+          color: isSelected ? null : Colors.grey[300],
+        ),
+        child: Center(
+          child: Text(
+            filter,
+            style: TextStyle(
+              color: isSelected ? Colors.white : Colors.black,
+            ),
           ),
         ),
       ),

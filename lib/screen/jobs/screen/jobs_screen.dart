@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
 import 'package:investorentrepreneur/screen/home/filter/screen/filterscreen.dart';
 import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
-import 'package:investorentrepreneur/screen/jobs/model/jobs_model.dart';
+import 'package:investorentrepreneur/screen/jobs/model/interestJobModel.dart';
+import 'package:investorentrepreneur/screen/jobs/model/jobsModel.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/apply_to_tangent_screen.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
@@ -96,33 +97,36 @@ class _JobsScreenState extends State<JobsScreen> {
                             _selectedTab = index;
                           });
                         },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            gradient: _selectedTab == index
-                                ? LinearGradient(colors: [
-                              Colors.blue,
-                              Colors.purple,
-                              Colors.red,
-                              Colors.orange
-                            ])
-                                : null,
-                            color: _selectedTab == index ? null : Colors.grey[300],
-                          ),
-                          child: Row(
-                            children: [
-                              Text(
-                                _tabs[index],
-                                style: TextStyle(
-                                  color: _selectedTab == index
-                                      ? Colors.white
-                                      : Colors.black,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Container(
+                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20),
+                              gradient: _selectedTab == index
+                                  ? LinearGradient(colors: [
+                                Colors.blue,
+                                Colors.purple,
+                                Colors.red,
+                                Colors.orange
+                              ])
+                                  : null,
+                              color: _selectedTab == index ? null : Colors.grey[300],
+                            ),
+                            child: Row(
+                              children: [
+                                Text(
+                                  _tabs[index],
+                                  style: TextStyle(
+                                    color: _selectedTab == index
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
                                 ),
-                              ),
-                              if (index != 0)
-                                Icon(Icons.arrow_drop_down, color: Colors.black),
-                            ],
+                                if (index != 0)
+                                  Icon(Icons.arrow_drop_down, color: Colors.black),
+                              ],
+                            ),
                           ),
                         ),
                       );
@@ -217,7 +221,7 @@ class _JobsScreenState extends State<JobsScreen> {
                       height: _isInterestExpanded ? null : 205,
                       child: _isInterestExpanded
                           ? GridView.builder(
-                        itemCount: getJobsByCategory(_selectedTab).length,
+                        itemCount: getRelatedJobsByCategory(_selectedTab).length,
                         shrinkWrap: true,
                         physics: NeverScrollableScrollPhysics(),
                         padding: EdgeInsets.zero,
@@ -228,16 +232,16 @@ class _JobsScreenState extends State<JobsScreen> {
                           childAspectRatio: 0.75,
                         ),
                         itemBuilder: (context, index) {
-                          return jobContainer(getJobsByCategory(_selectedTab)[index]);
+                          return relatedJobContainer(getRelatedJobsByCategory(_selectedTab)[index]);
                         },
                       )
                           : ListView.builder(
-                        itemCount: getJobsByCategory(_selectedTab).length,
+                        itemCount: getRelatedJobsByCategory(_selectedTab).length,
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return jobContainer(getJobsByCategory(_selectedTab)[index]);
+                          return relatedJobContainer(getRelatedJobsByCategory(_selectedTab)[index]);
                         },
                       ),
                     ),
@@ -273,18 +277,27 @@ class _JobsScreenState extends State<JobsScreen> {
           ),
           Text(job.location),
           Text(job.salary),
-          SizedBox(height: (_isJobsExpanded || _isInterestExpanded) ? 10 : 25),
+          // SizedBox(height: (_isJobsExpanded || _isInterestExpanded) ? 10 : 25),
           Center(
             child: GestureDetector(
               onTap: (){
-                _showBottomSheet();              },
+                _showBottomSheet(
+                    title: job.title,
+                    location: job.location,
+                    salary: job.salary,
+                    datePosted: job.datePosted,
+                    company: job.company,
+                    jobType: job.jobType,
+                );              },
               child: Container(
+                height: 44,
+                width: double.infinity,
                 padding: EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Text('Apply Now'),
+                child: Center(child: Text('Apply Now',style: TextStyle(color: Colors.blue),)),
               ),
             ),
           ),
@@ -293,7 +306,63 @@ class _JobsScreenState extends State<JobsScreen> {
     );
   }
 
-  void _showBottomSheet() {
+  Widget relatedJobContainer(InterestJobModel job) {
+    return Container(
+      width: 200,
+      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(right: 10),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.grey.withAlpha((0.8 * 255).toInt())),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ListTile(
+            contentPadding: EdgeInsets.zero,
+            leading: CircleAvatar(
+              backgroundColor: Colors.red,
+              radius: 20,
+              child: Icon(Icons.person, color: Colors.white),
+            ),
+            title: Text(job.title, style: TextStyle(fontWeight: FontWeight.bold)),
+            subtitle: Text(job.datePosted),
+          ),
+          Text(job.location),
+          Text(job.salary),
+          // SizedBox(height: (_isJobsExpanded || _isInterestExpanded) ? 10 : 15),
+          Expanded(
+            child: Center(
+              child: GestureDetector(
+                onTap: () {
+                  _showBottomSheet(
+                      title: job.title,
+                      location: job.location,
+                      salary: job.salary,
+                      datePosted: job.datePosted,
+                      company: job.company,
+                      jobType: job.jobType,
+                  );
+                },
+                child: Container(
+                  height: 44,
+                  width: double.infinity,
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: Colors.grey[300],
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(child: Text('Apply Now', style: TextStyle(color: Colors.blue))),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showBottomSheet({required String title, required String location, required String salary, required String datePosted, required String company, required String jobType}) {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,  // Isse bottom sheet ko full width milegi
@@ -313,7 +382,7 @@ class _JobsScreenState extends State<JobsScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text('Marketing head'),
                         Icon(Icons.bookmark_outline_sharp),
@@ -330,19 +399,18 @@ class _JobsScreenState extends State<JobsScreen> {
                       subtitle: Text('job.datePosted'),
                     ),
                     Text('3 week ago'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
-                    customRowWidget(icon: Icons.watch_outlined,title: 'kjfd'),
-                    customRowWidget(icon: Icons.light,title: 'kjfd'),
-                    customRowWidget(icon: Icons.safety_check,title: 'kjfd'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: 'kjfd'),
+                    customRowWidget(icon: Icons.shopping_bag_outlined,title: title),
+                    customRowWidget(icon: Icons.watch_outlined,title: location),
+                    customRowWidget(icon: Icons.light,title: salary),
+                    customRowWidget(icon: Icons.safety_check,title: datePosted),
+                    customRowWidget(icon: Icons.shopping_bag_outlined,title: company),
+                    customRowWidget(icon: Icons.shopping_bag_outlined,title: jobType),
                     SizedBox(height: 15,),
                     CustomElevatedButton(onPressed: (){
                       Navigator.pop(context);
                       Navigator.push(context, MaterialPageRoute(builder:  (context) => ApplyToTangentScreen(),));
-                    }, text: 'Apply Now'),
+                    }, text: 'Apply Now',
+                    ),
                   ],
                 ),
               ),
@@ -354,12 +422,16 @@ class _JobsScreenState extends State<JobsScreen> {
   }
 
   Widget customRowWidget({required String title, required IconData icon}){
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Icon(icon),
-        Flexible(child: Text('datafjdkfjdkfjdkf fjdkfj jkd jfkl jfdk datafjdk fjdkfjdkf fjdkfj jkd jfkl jfdk ')),
-      ],
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Icon(icon),
+          SizedBox(width: 12,),
+          Flexible(child: Text(title)),
+        ],
+      ),
     );
   }
 }
