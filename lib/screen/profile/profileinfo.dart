@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/screen/event/ticket.dart';
-import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
+
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
-class Checkout extends StatefulWidget {
-  const Checkout({super.key});
+class Profileinfo extends StatefulWidget {
+  const Profileinfo ({super.key});
 
   @override
-  State<Checkout> createState() => _CheckoutState();
+  State<Profileinfo > createState() => _ProfileinfoState();
 }
 
-class _CheckoutState extends State<Checkout> {
+class _ProfileinfoState extends State<Profileinfo > {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
-  final confirmEmailController = TextEditingController();
-  final locationController = TextEditingController();
-  final countryController = TextEditingController();
+  final noController = TextEditingController();
+  final dateController = TextEditingController();
+  final passwordController = TextEditingController();
 
-  String? isSelectedOption;
+String? selectedCountryCode; // For saving the selected country code
+  String? phoneNumber;  
 
   @override
   Widget build(BuildContext context) {
@@ -37,16 +37,46 @@ class _CheckoutState extends State<Checkout> {
               Row(
                 children: [
                   IconButton(
-                    icon: Icon(Icons.arrow_back_ios,
+                    icon: Icon(Icons.chevron_right_sharp,
                         size: screenWidth * 0.06, color: Colors.black),
                     onPressed: () {
                       Navigator.pop(context);
                     },
                   ),
-                  CustomText(
-                    text: "Checkout",
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      CustomText(
+                        text: "Profile information",
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+
+                       Row(
+                                children: [
+                                  TextButton(
+                                    onPressed: () {
+                                       Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    const Profileinfo()),
+                          );
+                                    },
+                                    child: const Text(
+                                      "Edit Profile",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 15,
+                                        color: Colors.blue,
+                                      ),
+                                    ),
+                                  ),
+                                  const Icon(Icons.edit,
+                                      size: 20, color: Colors.blue),
+                                ],
+                              ),
+                            
+                    ],
                   ),
                 ],
               ),SizedBox(height: 20,),
@@ -56,7 +86,7 @@ class _CheckoutState extends State<Checkout> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Billing information',
+                      'personal information',
                       style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
@@ -76,13 +106,38 @@ class _CheckoutState extends State<Checkout> {
                   ),
                   CustomTextFormField(
                     controller: nameController,
-                    hint: 'First interview',
+                    hint: 'name',
                   ),
                   const SizedBox(height: 15),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Email*',
+                      'Date of birth',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  CustomTextFormField(
+                    controller: dateController,
+                    hint: '03 june 2007',
+                  ),
+                  const SizedBox(height: 15), const Align(
+                    alignment: Alignment.centerLeft,
+                    child: Text(
+                      'Account information',
+                      style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Email',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -91,13 +146,25 @@ class _CheckoutState extends State<Checkout> {
                   ),
                   CustomTextFormField(
                     controller: emailController,
-                    hint: 'First interview',
+                    hint: 'abc123@gmail.com',
                   ),
                   const SizedBox(height: 15),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: const Text(
-                      'Confirm Email*',
+                      'Phone Number',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                 
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Password*',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
@@ -105,107 +172,14 @@ class _CheckoutState extends State<Checkout> {
                     ),
                   ),
                   CustomTextFormField(
-                    controller: confirmEmailController,
-                    hint: 'First interview',
+                    controller: passwordController,
+                    hint: '*********',
                   ),
                   const SizedBox(height: 15),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'Location/Postal code*',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                  ),
-                  CustomTextFormField(
-                    controller: locationController,
-                    hint: 'First interview',
-                  ),
-                  const SizedBox(height: 15),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'Country*',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                  ),
-                  CustomTextFormField(
-                    controller: countryController,
-                    hint: 'First interview',
-                  ),
-                  const SizedBox(height: 15),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: const Text(
-                      'Pay with',
-                      style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black),
-                    ),
-                  ),
-                  SizedBox(height: 10,),
-                  Container(
-                    padding: EdgeInsets.all(screenWidth * 0.03),
-                    decoration: BoxDecoration(
-                      color: const Color.fromARGB(255, 199, 216, 247),
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Radio(
-                                value: 'Credit Card',
-                                groupValue: isSelectedOption,
-                                onChanged: (value) {
-                                  setState(() {
-                                    isSelectedOption = value;
-                                  });
-                                }),
-                            Text(
-                              "Credit Card",
-                              style: TextStyle(
-                                color: Colors.black,
-                                fontSize: screenWidth * 0.045,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(width: 60),
-                            SizedBox(
-                              width: 100,
-                              child: Image.asset('assets/images/visaText.png'),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Center(
-                    child: CustomElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Ticket()),
-                        );
-                      },
-                      text: r'Buy Ticket-$35.00',
-                    ),
-                  ),
-                ],
-              )
-            ],
-          ),
+                ]
+          ),]
         ),
-      ),
+      ),)
     );
   }
 }

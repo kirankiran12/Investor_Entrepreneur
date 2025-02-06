@@ -6,12 +6,12 @@ import 'package:investorentrepreneur/screen/home/map/videos.dart';
 import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/jobs_screen.dart';
 import 'package:investorentrepreneur/screen/podcast/podcast.dart';
+import 'package:investorentrepreneur/screen/profile/profilehome.dart';
 import 'package:investorentrepreneur/widget/bottom%20_navigationbar.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
-
 
   @override
   State<Homescreen> createState() => _HomescreenState();
@@ -23,10 +23,9 @@ class _HomescreenState extends State<Homescreen> {
   final List<Widget> _screens = [
     HomeScreenContent(),
     PodcastScreenContent(),
-  //  Center(child: PodcastScreen()),
-  EventScreenContent(),
+    EventScreenContent(),
     JobsScreen(),
-    Center(child: Text('Profile')),
+    ProfileHome(),
   ];
 
   void _onItemTapped(int index) {
@@ -96,11 +95,10 @@ class HomeScreenContent extends StatelessWidget {
                   backgroundColor: Colors.grey[200],
                   child: IconButton(
                     onPressed: () {
-                       Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>   Filterscreen()),
-                    );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => Filterscreen()),
+                      );
                     },
                     icon: Icon(
                       Icons.add,
@@ -169,13 +167,16 @@ class HomeScreenContent extends StatelessWidget {
                     );
                   },
                   child: Container(
-                     decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.black,
-                  ),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                      color: Colors.black,
+                    ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: VideoPlayerWidget(videoPath: filteredVideos[index],  fit: BoxFit.cover,),
+                      child: VideoPlayerWidget(
+                        videoPath: filteredVideos[index],
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 );
