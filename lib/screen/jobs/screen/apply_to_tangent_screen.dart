@@ -48,6 +48,12 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
                       onTap: (){
                         Navigator.pop(context);
                       },
+                      child: Icon(Icons.arrow_back_ios)),
+                  Text('Apply to tangent'),
+                  GestureDetector(
+                      onTap: (){
+                        Navigator.pop(context);
+                      },
                       child: Icon(Icons.arrow_back_ios,size: 18,)),
                   SizedBox(width: 2,),
                   Text('Apply to tangent',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),
