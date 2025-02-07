@@ -1,17 +1,16 @@
-
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/common/customtext.dart';
 import 'package:investorentrepreneur/screen/event/ticketdetail.dart';
 
-class Participant extends StatefulWidget {
-  const Participant({super.key});
+class Mysubcribers extends StatefulWidget {
+  const Mysubcribers({super.key});
 
   @override
-  State<Participant> createState() => _ParticipantState();
+  State<Mysubcribers> createState() => _MysubcribersState();
 }
 
-class _ParticipantState extends State<Participant> {
-  final List<Map<String, String>> participants = [
+class _MysubcribersState extends State<Mysubcribers> {
+
+   final List<Map<String, String>> Mysubcribers= [
     {'name': 'Ali', 'id': 'Ali@1222', 'image': 'assets/images/men.jpeg'},
     {'name': 'Sarah', 'id': 'Sarah@2333', 'image': 'assets/images/men.jpeg'},
     {'name': 'Saad', 'id': 'Saad@3444', 'image': 'assets/images/men.jpeg'},
@@ -28,61 +27,41 @@ class _ParticipantState extends State<Participant> {
     {'name': 'Emma', 'id': 'Emma@4555', 'image': 'assets/images/men.jpeg'},
     {'name': 'Ali', 'id': 'Aali@5666', 'image': 'assets/images/men.jpeg'},
   ];
-
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+      double screenWidth = MediaQuery.of(context).size.width;
     double screenHeight = MediaQuery.of(context).size.height;
 
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: screenWidth * 0.05),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: screenHeight * 0.050),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: Icon(Icons.arrow_back_ios,
-                      size: screenWidth * 0.07, color: Colors.black),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
+    return 
+     
+      Scaffold(
+        backgroundColor: Colors.white,
+        body: Column(
+        children: [
+           SizedBox(height: 10,),
+          Row(
+            children: [
+              Text(
+                  'Total Subscribers: 52,000',
+                  style: TextStyle(
+                    fontSize: screenWidth * 0.05,
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
                 ),
-                CustomText(
-                  text: "Participant",
-                  fontSize: screenWidth * 0.06,
-                  fontWeight: FontWeight.bold,
-                ),
-                CircleAvatar(
-                  radius: screenWidth * 0.06,
-                  backgroundImage: AssetImage('assets/images/men.jpeg'),
-                ),
-              ],
-            ),
-            SizedBox(height: screenHeight * 0.04),
-            Text(
-              'Total Participants: 52,000',
-              style: TextStyle(
-                fontSize: screenWidth * 0.04,
-                color: Colors.black,
-                fontWeight: FontWeight.normal,
-              ),
-            ),
-            
+            ],
+          ),
+            SizedBox(height: 10,),
             Expanded(
               child: ListView.separated(
-                itemCount: participants.length,
+                itemCount: Mysubcribers.length,
                 separatorBuilder: (context, index) => const Divider(
                   // color: Colors.grey,
                   // thickness: 1,
                   height: 10,
                 ),
                 itemBuilder: (context, index) {
-                  final participant = participants[index];
+                  final participant = Mysubcribers[index];
                   return Padding(
                     padding:
                         EdgeInsets.symmetric(vertical: screenHeight * 0.01),
@@ -134,9 +113,11 @@ class _ParticipantState extends State<Participant> {
                 },
               ),
             ),
-          ],
-        ),
-      ),
-    );
+            
+          
+        
+      ]),);
+    
   }
 }
+

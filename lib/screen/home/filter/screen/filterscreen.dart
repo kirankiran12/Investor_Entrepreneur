@@ -3,7 +3,7 @@ import 'package:investorentrepreneur/screen/home/filter/model/filter_model.dart'
 import 'package:investorentrepreneur/screen/home/filter/provider/filter_provider.dart';
 import 'package:investorentrepreneur/screen/home/filter/widgets/entrepreneur_widget.dart';
 import 'package:investorentrepreneur/screen/home/filter/widgets/investor_widget.dart';
-import 'package:investorentrepreneur/widget/outlinegradientbutton.dart';
+
 import 'package:provider/provider.dart';
 
 class Filterscreen extends StatefulWidget {
