@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/job_apply_screen.dart';
-import 'package:investorentrepreneur/widget/outlinegradientbutton.dart';
 
 class ApplyToTangentScreen extends StatefulWidget {
   const ApplyToTangentScreen({super.key});
