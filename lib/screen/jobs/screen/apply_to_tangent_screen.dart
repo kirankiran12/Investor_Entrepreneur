@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/job_apply_screen.dart';
-import 'package:investorentrepreneur/widget/outlinegradientbutton.dart';
 
 class ApplyToTangentScreen extends StatefulWidget {
   const ApplyToTangentScreen({super.key});
@@ -44,12 +43,6 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
             children: [
               Row(
                 children: [
-                  GestureDetector(
-                      onTap: (){
-                        Navigator.pop(context);
-                      },
-                      child: Icon(Icons.arrow_back_ios)),
-                  Text('Apply to tangent'),
                   GestureDetector(
                       onTap: (){
                         Navigator.pop(context);

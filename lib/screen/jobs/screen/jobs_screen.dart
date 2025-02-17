@@ -5,6 +5,7 @@ import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/screen/jobs/model/interestJobModel.dart';
 import 'package:investorentrepreneur/screen/jobs/model/jobsModel.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/apply_to_tangent_screen.dart';
+import 'package:investorentrepreneur/screen/jobs/screen/job_filter_screen.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
@@ -66,7 +67,7 @@ class _JobsScreenState extends State<JobsScreen> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const Filterscreen()),
+                              builder: (context) => const JobFilterScreen()),
                         );
                       },
                       icon: Icon(
