@@ -1,24 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/loginscreen/forgotscreen.dart';
-import 'package:investorentrepreneur/screen/home/homescreen.dart';
+import 'package:investorentrepreneur/enterpereneur/personaldetal.dart';
+import 'package:investorentrepreneur/loginscreen/login_screen.dart';
+import 'package:investorentrepreneur/Investor/investorpersonaldetail.dart';
+import 'package:investorentrepreneur/viewer/viewerpersonaldetail.dart';
 
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
-class Welcomeback extends StatefulWidget {
-  const Welcomeback({super.key});
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({super.key});
 
   @override
-  State<Welcomeback> createState() => _WelcomebackState();
+  State<SignUpScreen> createState() => _SignUpScreenState();
 }
 
-class _WelcomebackState extends State<Welcomeback> {
+class _SignUpScreenState extends State<SignUpScreen> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
+  final nameController = TextEditingController();
   bool isChecked = false;
+
+  String selectedRole = "";
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +42,7 @@ class _WelcomebackState extends State<Welcomeback> {
             children: [
               Center(
                 child: CustomText(
-                  text: "Welcome back 👋!",
+                  text: "Let’s Get Started 🚀!",
                   fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
@@ -53,28 +58,65 @@ class _WelcomebackState extends State<Welcomeback> {
                 hint: 'Password',
               ),
               const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Forgotscreen(),
-                    ),
-                  );
-                },
-                child: Column(
-                  children: [
-                    Container(
-                        margin: EdgeInsets.only(left: 100),
-                        child: const Text('Forgot Password?')),
-                  ],
-                ),
+              Text(
+                "Select your Role",
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 10),
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: [
+                  _buildRoleButton(
+                    "Entrepreneur",
+                    selectedRole == "Entrepreneur",
+                    () {
+                      setState(() {
+                        selectedRole = "Entrepreneur";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Personaldetal()),
+                      );
+                    },
+                  ),
+                  _buildRoleButton(
+                    "Investor",
+                    selectedRole == "Investor",
+                    () {
+                      setState(() {
+                        selectedRole = "Investor";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const InvestorPersonaldetal()),
+                      );
+                    },
+                  ),
+                  _buildRoleButton(
+                    "Viewer",
+                    selectedRole == "Viewer",
+                    () {
+                      setState(() {
+                        selectedRole = "Viewer";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Viewerpersonaldetail()),
+                      );
+                    },
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               Row(children: [
                 Checkbox(
                   value: isChecked,
-                  activeColor: Colors.black,
+                  activeColor: Colors.blue,
                   onChanged: (bool? newValue) {
                     setState(() {
                       isChecked = newValue!;
@@ -92,7 +134,7 @@ class _WelcomebackState extends State<Welcomeback> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const Homescreen()),
+                          builder: (context) => const WelcomeBackScreen()),
                     );
                   },
                   text: 'Sign up',
@@ -156,23 +198,58 @@ class _WelcomebackState extends State<Welcomeback> {
                   ),
                 ],
               ),
-              const SizedBox(height: 70),
+              const SizedBox(height: 40),
+              Center(
+                child: Text.rich(
+                  TextSpan(
+                    text: 'By proceeding you agree to investors',
+                    style: GoogleFonts.inter(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    children: [
+                      TextSpan(
+                        text: ' Terms of Use ',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          color: AppColor.blueColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'and ',
+                        style: GoogleFonts.inter(
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      TextSpan(
+                        text: 'Privacy Policy ',
+                        style: GoogleFonts.inter(
+                          fontSize: 16,
+                          color: AppColor.blueColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     " Already have an account? ",
-                    style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.black54,
-                        fontWeight: FontWeight.bold),
+                    style: TextStyle(fontSize: 14, color: Colors.black54),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Homescreen()),
+                            builder: (context) => const WelcomeBackScreen()),
                       );
                     },
                     child: const Text(
@@ -187,6 +264,37 @@ class _WelcomebackState extends State<Welcomeback> {
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoleButton(
+      String text, bool isSelected, VoidCallback onPressed) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [
+                    Colors.blue,
+                    Colors.purple,
+                    Colors.red,
+                    Colors.orange
+                  ],
+                )
+              : null,
+          color: isSelected ? null : Colors.grey[300],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

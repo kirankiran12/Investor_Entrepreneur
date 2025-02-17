@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/loginscreen/loginscreen.dart';
+import 'package:investorentrepreneur/loginscreen/login_screen.dart';
+import 'package:investorentrepreneur/loginscreen/signup_screen.dart';
 
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 
@@ -103,7 +104,7 @@ class _SplashscreenState extends State<Splashscreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const SignUpScreen()),
+                          builder: (context) => const WelcomeBackScreen()),
                     );
               },
               text: "Get Started",

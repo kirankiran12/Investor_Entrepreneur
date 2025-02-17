@@ -116,17 +116,17 @@ class _PodcastCategoryState extends State<PodcastCategory> {
               ),
               SizedBox(height: screenHeight * 0.03),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Container(
-                    height: screenHeight * 0.25,
-                    width: screenWidth * 0.4,
-                    child: ClipRRect(
-                      child: Image.asset('assets/images/podcast.jpeg',
-                          fit: BoxFit.fill),
-                      borderRadius: BorderRadius.circular(12),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(12),
+                    child: Image.asset('assets/images/podcast.jpeg',
+                        fit: BoxFit.fill,
+                      height: screenHeight * 0.25,
+                      width: screenWidth * 0.4,
                     ),
                   ),
-                  SizedBox(width: screenWidth * 0.05),
+                  // SizedBox(width: screenWidth * 0.05),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -248,95 +248,94 @@ class _PodcastCategoryState extends State<PodcastCategory> {
 
   Widget _buildGridVideoList(List<Map<String, String>> videos,
       double screenWidth, int crossAxisCount) {
-    return SizedBox(
-      height: 280,
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: crossAxisCount,
-          crossAxisSpacing: screenWidth * 0.02,
-          mainAxisSpacing: screenWidth * 0.02,
-          childAspectRatio: (screenWidth / crossAxisCount) / 200,
-        ),
-        itemCount: videos.length,
-        itemBuilder: (context, index) {
-          final video = videos[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ReelsScreen(
-                    videos: _Videos,
-                    initialIndex: index,
-                  ),
+    return GridView.builder(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: screenWidth * 0.02,
+        mainAxisSpacing: screenWidth * 0.02,
+        childAspectRatio: (screenWidth / crossAxisCount) / 200,
+      ),
+      itemCount: videos.length,
+      itemBuilder: (context, index) {
+        final video = videos[index];
+        return GestureDetector(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ReelsScreen(
+                  videos: _Videos,
+                  initialIndex: index,
                 ),
-              );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                color: Colors.black,
               ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: Stack(
-                  children: [
-                    SizedBox.expand(
-                      child: VideoPlayerWidget(
-                        videoPath: video['path']!,
-                        fit: BoxFit.fill,
-                      ),
+            );
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(12),
+              color: Colors.black,
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: Stack(
+                children: [
+                  SizedBox.expand(
+                    child: VideoPlayerWidget(
+                      videoPath: video['path']!,
+                      fit: BoxFit.fill,
                     ),
-                    Positioned(
-                      bottom: 1,
-                      left: 8,
-                      right: 8,
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.6),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              video['category']!,
-                              style: TextStyle(
-                                  fontSize: screenWidth * 0.035,
-                                  fontWeight: FontWeight.bold,
+                  ),
+                  Positioned(
+                    bottom: 1,
+                    left: 8,
+                    right: 8,
+                    child: Container(
+                      padding: EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.6),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            video['category']!,
+                            style: TextStyle(
+                                fontSize: screenWidth * 0.035,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          SizedBox(height: 5),
+                          Row(
+                            children: [
+                              Icon(Icons.access_time,
+                                  size: screenWidth * 0.04,
                                   color: Colors.white),
-                            ),
-                            SizedBox(height: 5),
-                            Row(
-                              children: [
-                                Icon(Icons.access_time,
-                                    size: screenWidth * 0.04,
+                              SizedBox(width: 4),
+                              Text(
+                                "35 min ago",
+                                style: TextStyle(
+                                    fontSize: screenWidth * 0.03,
                                     color: Colors.white),
-                                SizedBox(width: 4),
-                                Text(
-                                  "35 min ago",
-                                  style: TextStyle(
-                                      fontSize: screenWidth * 0.03,
-                                      color: Colors.white),
-                                ),
-                                SizedBox(width: 25),
-                                Icon(Icons.screen_share_outlined,
-                                    size: screenWidth * 0.05,
-                                    color: Colors.white),
-                              ],
-                            ),
-                          ],
-                        ),
+                              ),
+                              SizedBox(width: 25),
+                              Icon(Icons.screen_share_outlined,
+                                  size: screenWidth * 0.05,
+                                  color: Colors.white),
+                            ],
+                          ),
+                        ],
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }
