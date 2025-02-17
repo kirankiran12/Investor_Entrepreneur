@@ -45,6 +45,7 @@ dependencies:
   firebase_core: ^3.11.0
   firebase_auth: ^5.4.2
   cloud_firestore: ^5.6.3
+  google_sign_in: ^6.2.2
 intl_phone_field: ^3.0.3
 flutter_sound: ^9.2.13
 permission_handler: ^11.1.0

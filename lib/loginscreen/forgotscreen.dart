@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/loginscreen/donepasswoed.dart';
+import 'package:investorentrepreneur/loginscreen/donepassword.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
@@ -5,8 +6,9 @@ import 'package:investorentrepreneur/common/customtext.dart';
 import 'package:investorentrepreneur/enterpereneur/personaldetal.dart';
 import 'package:investorentrepreneur/loginscreen/signin.dart';
 import 'package:investorentrepreneur/Investor/investorpersonaldetail.dart';
+import 'package:investorentrepreneur/screen/home/homescreen.dart';
 import 'package:investorentrepreneur/viewer/viewerpersonaldetail.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
@@ -22,8 +24,25 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   bool isChecked = false;
-
   String selectedRole = "";
+  
+   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+//  GoogleSignIn
+
+Future<UserCredential?> loginwithgoogle() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+
+      return await _auth.signInWithCredential(cred);
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -131,11 +150,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                 child: CustomElevatedButton(
                   onPressed: () {
-                    Navigator.push(
+                     _auth
+                      .signInWithEmailAndPassword(
+                          email: emailController.text,
+                          password: passwordController.text)
+                      .then((value) {
+                    Navigator.pushReplacement(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const Welcomeback()),
+                          builder: (context) => const Homescreen()),
                     );
+                  }).onError((error, StackTrace) {
+                    print(error.toString());
+                  });
+                   
                   },
                   text: 'Sign up',
                 ),

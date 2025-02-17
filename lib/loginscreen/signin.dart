@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
@@ -19,6 +20,7 @@ class _WelcomebackState extends State<Welcomeback> {
   final passwordController = TextEditingController();
 
   bool isChecked = false;
+     final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -89,11 +91,12 @@ class _WelcomebackState extends State<Welcomeback> {
               Center(
                 child: CustomElevatedButton(
                   onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const Homescreen()),
-                    );
+                     _auth.createUserWithEmailAndPassword(email: emailController.text, password: passwordController.text);
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => const  Homescreen()),
+                );
+                   
                   },
                   text: 'Sign up',
                 ),
