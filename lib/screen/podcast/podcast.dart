@@ -51,135 +51,138 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
             (video) => video['category']!.toLowerCase().contains(_searchQuery))
         .toList();
 
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
-          
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 30,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                "Podcast",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Mapscreen()),
-                      );
-                    },
-                    icon: const Icon(Icons.location_on_rounded),
-                  ),
-                  const SizedBox(width: 10),
-                  CircleAvatar(
-                    radius: 25,
-                    backgroundColor: Colors.grey[200],
-                    child: IconButton(
+    return Container(
+      color: Colors.white,
+      child: SingleChildScrollView(
+        padding: EdgeInsets.symmetric(
+            horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
+            
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 30,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Podcast",
+                  style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                ),
+                Row(
+                  children: [
+                    IconButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const PodcastCategory()),
+                              builder: (context) => const Mapscreen()),
                         );
                       },
-                      icon: Icon(
-                        Icons.add,
+                      icon: const Icon(Icons.location_on_rounded),
+                    ),
+                    const SizedBox(width: 10),
+                    CircleAvatar(
+                      radius: 25,
+                      backgroundColor: Colors.grey[200],
+                      child: IconButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const PodcastCategory()),
+                          );
+                        },
+                        icon: Icon(
+                          Icons.add,
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Container(
-            height: 50,
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.grey[200],
+                  ],
+                ),
+              ],
             ),
-            child: TextField(
-              controller: _searchController,
-              onChanged: (value) {
-                setState(() {
-                  _searchQuery = value.toLowerCase();
-                });
-              },
-              decoration: const InputDecoration(
-                border: InputBorder.none,
-                hintText: 'Search...',
-                prefixIcon: Icon(Icons.search),
+            const SizedBox(height: 20),
+            Container(
+              height: 50,
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(8),
+                color: Colors.grey[200],
+              ),
+              child: TextField(
+                controller: _searchController,
+                onChanged: (value) {
+                  setState(() {
+                    _searchQuery = value.toLowerCase();
+                  });
+                },
+                decoration: const InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search...',
+                  prefixIcon: Icon(Icons.search),
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 20),
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: List.generate(_tabs.length, (index) {
-                return GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      _selectedTab = index;
-                    });
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(horizontal: 8),
-                    padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      gradient: _selectedTab == index
-                          ? LinearGradient(colors: [
-                              Colors.blue,
-                              Colors.purple,
-                              Colors.red,
-                              Colors.orange
-                            ])
-                          : null,
-                      color: _selectedTab == index ? null : Colors.grey[300],
-                    ),
-                    child: Row(
-                      children: [
-                        Text(
-                          _tabs[index],
-                          style: TextStyle(
-                            color: _selectedTab == index
-                                ? Colors.white
-                                : Colors.black,
-                          ),
-                        ),
-                        if (index != 0)
-                          Icon(Icons.arrow_drop_down,
+            const SizedBox(height: 20),
+            SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: List.generate(_tabs.length, (index) {
+                  return GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        _selectedTab = index;
+                      });
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(horizontal: 8),
+                      padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        gradient: _selectedTab == index
+                            ? LinearGradient(colors: [
+                                Colors.blue,
+                                Colors.purple,
+                                Colors.red,
+                                Colors.orange
+                              ])
+                            : null,
+                        color: _selectedTab == index ? null : Colors.grey[300],
+                      ),
+                      child: Row(
+                        children: [
+                          Text(
+                            _tabs[index],
+                            style: TextStyle(
                               color: _selectedTab == index
                                   ? Colors.white
-                                  : Colors.black),
-                      ],
+                                  : Colors.black,
+                            ),
+                          ),
+                          if (index != 0)
+                            Icon(Icons.arrow_drop_down,
+                                color: _selectedTab == index
+                                    ? Colors.white
+                                    : Colors.black),
+                        ],
+                      ),
                     ),
-                  ),
-                );
-              }),
+                  );
+                }),
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          _buildSectionTitle("Recently Played"),
-          _buildVideoList(filteredVideos, screenHeight),
-          _buildSectionTitle("Recommended Videos"),
-          _buildVideoList(filteredVideos, screenHeight),
-          _buildSectionTitle("Suggested Podcasts"),
-          _buildGridVideoList(filteredVideos, screenWidth),
-        ],
+            const SizedBox(height: 20),
+            _buildSectionTitle("Recently Played"),
+            _buildVideoList(filteredVideos, screenHeight),
+            _buildSectionTitle("Recommended Videos"),
+            _buildVideoList(filteredVideos, screenHeight),
+            _buildSectionTitle("Suggested Podcasts"),
+            _buildGridVideoList(filteredVideos, screenWidth),
+          ],
+        ),
       ),
     );
   }
@@ -320,7 +323,7 @@ class _PodcastScreenContentState extends State<PodcastScreenContent> {
                 : 2,
         crossAxisSpacing: 4,
         mainAxisSpacing: 4,
-        childAspectRatio: 0.8, // Adjust aspect ratio for height
+        childAspectRatio: 0.8, 
       ),
       itemCount: videos.length,
       itemBuilder: (context, index) {

@@ -1,11 +1,25 @@
 import 'package:flutter/material.dart';
+
+import 'package:investorentrepreneur/screen/home/Setting/acessContact.dart';
+import 'package:investorentrepreneur/screen/home/Setting/appliedjob.dart';
+import 'package:investorentrepreneur/screen/home/Setting/blockuserscreen.dart';
+
+import 'package:investorentrepreneur/screen/home/Setting/myevent.dart';
+import 'package:investorentrepreneur/screen/home/Setting/paymentmethod/payment.dart';
+import 'package:investorentrepreneur/screen/home/Setting/paymentmethod/startedverify.dart';
+import 'package:investorentrepreneur/screen/home/Setting/privacypolicy/privacypolicy.dart';
+
+import 'package:investorentrepreneur/screen/massage/massage.dart';
+import 'package:investorentrepreneur/screen/massage/notification.dart';
 import 'package:investorentrepreneur/screen/profile/profileinfo.dart';
 import 'package:investorentrepreneur/screen/profile/profilejob.dart';
 import 'package:investorentrepreneur/screen/profile/profilepodcast.dart';
 import 'package:investorentrepreneur/screen/profile/profileprofile.dart';
 import 'package:investorentrepreneur/screen/profile/profilevent.dart';
 import 'package:investorentrepreneur/screen/profile/profilevideo.dart';
-import 'package:investorentrepreneur/screen/saved.dart';
+import 'package:investorentrepreneur/screen/profilescreenother/profilescreenother.dart';
+
+import 'package:investorentrepreneur/screen/watchhistory.dart';
 
 class ProfileHome extends StatefulWidget {
   const ProfileHome({super.key});
@@ -38,7 +52,13 @@ class _ProfileHomeState extends State<ProfileHome> {
           }),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Notificationscreen()),
+                );
+              },
               icon: const Icon(
                 Icons.notifications,
                 size: 25,
@@ -46,7 +66,13 @@ class _ProfileHomeState extends State<ProfileHome> {
               ),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const Massagescreen()),
+                );
+              },
               icon: const Icon(
                 Icons.offline_bolt_outlined,
                 size: 25,
@@ -56,39 +82,156 @@ class _ProfileHomeState extends State<ProfileHome> {
           ],
         ),
         drawer: Drawer(
+          backgroundColor: Colors.white,
           child: ListView(
             children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(color: Colors.blue),
-                child: Center(
-                  child: Text(
-                    'Drawer Header',
-                    style: TextStyle(color: Colors.white, fontSize: 20),
-                  ),
-                ),
+              SizedBox(
+                height: 20,
               ),
               ListTile(
                 leading: const CircleAvatar(
-                  child: Icon(Icons.school),
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.arrow_back_ios_new),
                 ),
-                title: const Text('School'),
-                trailing: const Icon(Icons.calculate),
+                title: const Text(
+                  'Setting',
+                  style: TextStyle(fontSize: 20),
+                ),
+                onTap: () {},
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.find_in_page_outlined),
+                ),
+                title: const Text('Applied  job'),
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('School is clicked'),
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Appliedjob()),
+                  );
                 },
               ),
+              Divider(),
               ListTile(
                 leading: const CircleAvatar(
-                  child: Icon(Icons.home),
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.archive_outlined),
                 ),
-                title: const Text('Home'),
-                trailing: const Icon(Icons.home),
+                title: const Text('Ticket bought'),
                 onTap: () {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                    content: Text('Home is clicked'),
-                  ));
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Myevent()),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.history),
+                ),
+                title: const Text('Watch history'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => WatchHistory()));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.notifications),
+                ),
+                title: const Text('Notiification'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Notificationscreen()),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.chat),
+                ),
+                title: const Text('Massage'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Massagescreen()),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.contact_page),
+                ),
+                title: const Text('Access to your contact'),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const ContactPage()),
+                  );
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.block_outlined),
+                ),
+                title: const Text('Block user list'),
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => BlockUserScreen()));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.perm_device_information),
+                ),
+                title: const Text('Device permission'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => CustomScreen1()));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.card_membership),
+                ),
+                title: const Text('Cards'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => Paymentscreen()));
+                },
+              ),
+              Divider(),
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Icon(Icons.card_membership),
+                ),
+                title: const Text('privacy policy'),
+                onTap: () {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => PrivacyPolicy()));
                 },
               ),
             ],
@@ -203,7 +346,14 @@ class _ProfileHomeState extends State<ProfileHome> {
                                 borderRadius: BorderRadius.circular(50),
                               ),
                             ),
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const Profilescreenother()),
+                              );
+                            },
                             child: const Text(
                               'Edit Profile',
                               style: TextStyle(
@@ -228,7 +378,7 @@ class _ProfileHomeState extends State<ProfileHome> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const Saved()),
+                                    builder: (context) => const WatchHistory()),
                               );
                             },
                             child: const Text(

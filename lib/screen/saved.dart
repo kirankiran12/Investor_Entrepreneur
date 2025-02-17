@@ -1,177 +1,317 @@
+
 import 'package:flutter/material.dart';
-import 'package:investorentrepreneur/screen/home/map/videos.dart';
+import 'package:investorentrepreneur/screen/podcastplayer.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
 class Saved extends StatefulWidget {
   const Saved({super.key});
 
   @override
-  SavedState createState() => SavedState();
+  State<Saved> createState() => _SavedState();
 }
 
-class SavedState extends State<Saved> {
-  final List<Map<String, String>> _videos = [
-    {
-      'path': 'assets/videos/video1.mp4',
-      'category': 'Networking',
-      'name': 'Lilly Williams'
-    },
-    {
-      'path': 'assets/videos/video2.mp4',
-      'category': 'Finance',
-      'name': 'Lilly Williams'
-    },
-    {
-      'path': 'assets/videos/video3.mp4',
-      'category': 'Exploring cinematic',
-      'name': 'Lilly Williams'
-    },
-    {
-      'path': 'assets/videos/video4.mp4',
-      'category': 'Exploring cinematic',
-      'name': 'Lilly Williams'
-    },
-    {
-      'path': 'assets/videos/video5.mp4',
-      'category': 'Technology',
-      'name': 'Lilly Williams'
-    },
-    {
-      'path': 'assets/videos/video6.mp4',
-      'category': 'Education',
-      'name': 'Lilly Williams'
-    },
-  ];
+class _SavedState extends State<Saved> {
+  int _selectedTab = 0;
+  final List<String> _tabs = ["All", "Videos", "Podcasts", "Events"];
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-
-    return SingleChildScrollView(
-      padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05, vertical: screenHeight * 0.02),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: Padding(
+          padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              IconButton(
-                icon: Icon(Icons.arrow_back_ios,
-                    size: screenWidth * 0.07, color: Colors.black),
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-              ),
-              const Text(
-                "Saved",
-                style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-              ),
-            ],
-          ),
-          const SizedBox(height: 20),
-          Column(children: [
-            const Text(
-              "Videos",
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 220,
-              child: ListView.builder(
+              const SizedBox(height: 20),
+              _buildHeader(context),
+              const SizedBox(height: 20),
+              SingleChildScrollView(
                 scrollDirection: Axis.horizontal,
-                itemCount: _videos.length,
-                itemBuilder: (context, index) {
-                  final video = _videos[index];
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ReelsScreen(
-                            videos: _videos.map((v) => v['path']!).toList(),
-                            initialIndex: index,
-                          ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: List.generate(_tabs.length, (index) {
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          _selectedTab = index;
+                        });
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 8),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 15, vertical: 10),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          gradient: _selectedTab == index
+                              ? LinearGradient(colors: [
+                                  Colors.blue,
+                                  Colors.purple,
+                                  Colors.red,
+                                  Colors.orange
+                                ])
+                              : null,
+                          color: _selectedTab == index ? null : Colors.grey[300],
                         ),
-                      );
-                    },
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
-                      width: 160,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                        color: Colors.black,
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
-                        child: Stack(
+                        child: Row(
                           children: [
-                            VideoPlayerWidget(
-                              videoPath: video['path']!,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned(
-                              bottom: 8,
-                              left: 8,
-                              right: 8,
-                              child: Container(
-                                padding: const EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                  color: Colors.black.withOpacity(0.6),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      video['category']!,
-                                      style: const TextStyle(
-                                        fontSize: 14,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white,
-                                      ),
-                                    ),
-                                    Text(
-                                      video['name']!,
-                                      style: const TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.grey,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                            Text(
+                              _tabs[index],
+                              style: TextStyle(
+                                color: _selectedTab == index
+                                    ? Colors.white
+                                    : Colors.black,
                               ),
                             ),
+                            if (index != 0)
+                              Icon(Icons.arrow_drop_down,
+                                  color: _selectedTab == index
+                                      ? Colors.white
+                                      : Colors.black),
                           ],
                         ),
                       ),
-                    ),
-                  );
-                },
+                    );
+                  }),
+                ),
               ),
-            )
-          ]),
-          const SizedBox(height: 20),
-          const Text(
-            "Podcasts",
-            style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              const SizedBox(height: 20),
+
+              
+              Expanded(
+                child: _buildTabContent(),
+              ),
+            ],
           ),
-          const SizedBox(height: 10),
-          SizedBox(
-            height: 250,
-            child: ListView(
-              scrollDirection: Axis.horizontal,
-              children: [
-                _buildEventCard(
-                    'assets/images/politics.jpeg', 'Tech', 'Feb 10, 2025'),
-                _buildEventCard(
-                    'assets/images/tech.jpeg', 'Politics', 'Mar 15, 2025'),
-                _buildEventCard(
-                    'assets/images/business.jpeg', 'Startup', 'Feb 10, 2025'),
-                _buildEventCard('assets/images/technology.jpeg', 'Business',
-                    'Mar 15, 2025'),
-              ],
+        ),
+      ),
+    );
+  }
+
+  
+  Widget _buildTabContent() {
+    switch (_selectedTab) {
+      case 1: 
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle('Videos'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildVideoCard),
+          ],
+        );
+      case 2: 
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle('Podcasts'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildPodcastCard),
+          ],
+        );
+      case 3: 
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildSectionTitle('Events'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildEventCard),
+          ],
+        );
+      default: 
+        return ListView(
+          children: [
+            _buildSectionTitle('Videos'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildVideoCard),
+            const SizedBox(height: 20),
+            _buildSectionTitle('Podcasts'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildPodcastCard),
+            const SizedBox(height: 20),
+            _buildSectionTitle('Events'),
+            const SizedBox(height: 10),
+            _buildHorizontalList(_buildEventCard),
+          ],
+        );
+    }
+  }
+
+  Widget _buildHeader(BuildContext context) {
+    return Row(
+      children: [
+        IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
+        const Text(
+          "Saved",
+          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Text(
+      title,
+      style: const TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+    );
+  }
+
+  Widget _buildHorizontalList(Widget Function(int) itemBuilder) {
+    return SizedBox(
+      height: 220,
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: 6,
+        itemBuilder: (context, index) => Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: itemBuilder(index),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildVideoCard(int index) {
+    final videos = [
+      {'path': 'assets/videos/video1.mp4'},
+      {'path': 'assets/videos/video2.mp4'},
+      {'path': 'assets/videos/video3.mp4'},
+      {'path': 'assets/videos/video4.mp4'},
+      {'path': 'assets/videos/video5.mp4'},
+      {'path': 'assets/videos/video6.mp4'},
+    ];
+
+    final video = videos[index];
+
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 160,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          color: Colors.black,
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(12),
+          child: Stack(
+            children: [
+              VideoPlayerWidget(
+                videoPath: video['path']!,
+                fit: BoxFit.cover,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPodcastCard(int index) {
+    final events = [
+      {
+        'image': 'assets/images/politicsimage.jpeg',
+        'category': 'Politics',
+        'name': 'Lily Waliasms',
+        'time': '35 min ago'
+      },
+      {
+        'image': 'assets/images/techmages.jpeg',
+        'category': 'Tech',
+        'name': 'Lily Waliasms',
+        'time': '35 min ago'
+      },
+      {
+        'image': 'assets/images/business.jpeg',
+        'category': 'Startup',
+        'name': 'Lily Waliasms',
+        'time': '35 min ago'
+      },
+      {
+        'image': 'assets/images/technology.jpeg',
+        'category': 'Business',
+        'name': 'Lily Waliasms',
+        'time': '35 min ago'
+      },
+    ];
+
+    final event = events[index % events.length];
+
+    return Container(
+      width: 200,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(15),
+        image: DecorationImage(
+          image: AssetImage(event['image']!),
+          fit: BoxFit.cover,
+        ),
+      ),
+      child: Stack(
+        children: [
+          Positioned(
+            top: 10,
+            right: 10,
+            child: IconButton(onPressed: (){
+               Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Podcastplayer()),
+                      );
+            }, icon: const Icon(Icons.bookmark_outline,color: Colors.white,)),
+           
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: Colors.black.withOpacity(0.7),
+                borderRadius: const BorderRadius.vertical(
+                  bottom: Radius.circular(15),
+                ),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    event['category']!,
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    event['name']!,
+                    style: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 13,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.play_arrow_outlined,
+                            color: Colors.white),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                      Text(
+                        event['time']!,
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -179,14 +319,24 @@ class SavedState extends State<Saved> {
     );
   }
 
-  Widget _buildEventCard(String imagePath, String category, String date) {
+  Widget _buildEventCard(int index) {
+    final events = [
+      {'image': 'assets/images/technology.jpeg', 'category': 'Business', 'date': 'Mar 15, 2025'},
+      {'image': 'assets/images/business.jpeg', 'category': 'Startup', 'date': 'Feb 10, 2025'},
+      {'image': 'assets/images/tech.jpeg', 'category': 'Tech', 'date': 'Feb 10, 2025'},
+      {'image': 'assets/images/politics.jpeg', 'category': 'Politics', 'date': 'Mar 15, 2025'},
+      {'image': 'assets/images/business.jpeg', 'category': 'Startup', 'date': 'Feb 10, 2025'},
+      {'image': 'assets/images/technology.jpeg', 'category': 'Business', 'date': 'Mar 15, 2025'},
+    ];
+
+    final event = events[index % events.length];
+
     return Container(
       width: 200,
-      margin: const EdgeInsets.only(right: 10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         image: DecorationImage(
-          image: AssetImage(imagePath),
+          image: AssetImage(event['image']!),
           fit: BoxFit.cover,
         ),
       ),
@@ -205,7 +355,7 @@ class SavedState extends State<Saved> {
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.all(10),
               decoration: BoxDecoration(
                 color: Colors.black.withOpacity(0.7),
                 borderRadius: const BorderRadius.vertical(
@@ -217,7 +367,7 @@ class SavedState extends State<Saved> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    category,
+                    event['category']!,
                     style: const TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -226,35 +376,11 @@ class SavedState extends State<Saved> {
                   ),
                   const SizedBox(height: 5),
                   Text(
-                    date,
+                    event['date']!,
                     style: const TextStyle(
-                      color: Colors.white,
+                      color: Colors.grey,
                       fontSize: 14,
                     ),
-                  ),
-                  const SizedBox(height: 10),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () {},
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Colors.white.withOpacity(0.3),
-                        ),
-                        child: const Text(
-                          'Buy Ticket',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 12,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      IconButton(
-                        icon: const Icon(Icons.share, color: Colors.white),
-                        onPressed: () {},
-                      ),
-                    ],
                   ),
                 ],
               ),

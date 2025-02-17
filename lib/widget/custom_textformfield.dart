@@ -47,7 +47,7 @@ class CustomTextFormField extends StatelessWidget {
   final void Function(String)? onFieldSubmitted;
   final void Function(PointerDownEvent)? onTapOutside;
   final TextEditingController? controller;
-  final String? Function(String?)? validator; // Optional validator function
+  final String? Function(String?)? validator; 
 
   const CustomTextFormField({
     Key? key,
@@ -59,7 +59,7 @@ class CustomTextFormField extends StatelessWidget {
     this.horizontalPadding,
     this.verticalPadding,
     this.contentPadding,
-    this.obscureTextCharacter ='.',
+    this.obscureTextCharacter = '.',
     this.hint,
     this.labelText,
     this.initialValue,
@@ -109,7 +109,8 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: obscureText ?? false ? 1 : (maxLines ?? 1),
       textInputAction: inputAction,
       initialValue: initialValue,
-      style: textStyle ?? GoogleFonts.poppins(color: inputColor ?? AppColor.blackColor),
+      style: textStyle ??
+          GoogleFonts.poppins(color: inputColor ?? AppColor.blackColor),
       autofocus: false,
       keyboardType: keyboardType,
       onChanged: onChanged,
@@ -173,10 +174,9 @@ class CustomTextFormField extends StatelessWidget {
       validator: validator,
       onFieldSubmitted: onFieldSubmitted,
       onTapOutside: onTapOutside ??
-              (event) {
+          (event) {
             FocusManager.instance.primaryFocus?.unfocus();
           },
     );
   }
 }
-
