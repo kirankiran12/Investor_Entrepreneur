@@ -22,6 +22,7 @@ class _JobsScreenState extends State<JobsScreen> {
   bool _isInterestExpanded = false;
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -31,15 +32,15 @@ class _JobsScreenState extends State<JobsScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  if(_isJobsExpanded || _isInterestExpanded)
-                  InkWell(
-                      onTap: (){
-                        setState(() {
-                          _isJobsExpanded = false;
-                          _isInterestExpanded = false;
-                        });
-                      },
-                      child: Icon(Icons.arrow_back_ios_new)),
+                  if (_isJobsExpanded || _isInterestExpanded)
+                    InkWell(
+                        onTap: () {
+                          setState(() {
+                            _isJobsExpanded = false;
+                            _isInterestExpanded = false;
+                          });
+                        },
+                        child: Icon(Icons.arrow_back_ios_new)),
                   CustomText(
                     text: "Jobs",
                     fontSize: 30,
@@ -101,18 +102,21 @@ class _JobsScreenState extends State<JobsScreen> {
                         child: Padding(
                           padding: const EdgeInsets.only(right: 8.0),
                           child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(20),
                               gradient: _selectedTab == index
                                   ? LinearGradient(colors: [
-                                Colors.blue,
-                                Colors.purple,
-                                Colors.red,
-                                Colors.orange
-                              ])
+                                      Colors.blue,
+                                      Colors.purple,
+                                      Colors.red,
+                                      Colors.orange
+                                    ])
                                   : null,
-                              color: _selectedTab == index ? null : Colors.grey[300],
+                              color: _selectedTab == index
+                                  ? null
+                                  : Colors.grey[300],
                             ),
                             child: Row(
                               children: [
@@ -125,7 +129,8 @@ class _JobsScreenState extends State<JobsScreen> {
                                   ),
                                 ),
                                 if (index != 0)
-                                  Icon(Icons.arrow_drop_down, color: Colors.black),
+                                  Icon(Icons.arrow_drop_down,
+                                      color: Colors.black),
                               ],
                             ),
                           ),
@@ -144,13 +149,15 @@ class _JobsScreenState extends State<JobsScreen> {
                       children: [
                         Text(
                           'Jobs',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         GestureDetector(
                           onTap: () {
                             setState(() {
                               _isJobsExpanded = !_isJobsExpanded;
-                              _isInterestExpanded = false; // Hide interest section
+                              _isInterestExpanded =
+                                  false; // Hide interest section
                             });
                           },
                           child: Text(
@@ -165,33 +172,35 @@ class _JobsScreenState extends State<JobsScreen> {
                       height: _isJobsExpanded ? null : 205,
                       child: _isJobsExpanded
                           ? GridView.builder(
-                        itemCount: getJobsByCategory(_selectedTab).length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 0.75,
-                        ),
-                        itemBuilder: (context, index) {
-                          return jobContainer(getJobsByCategory(_selectedTab)[index]);
-                        },
-                      )
+                              itemCount: getJobsByCategory(_selectedTab).length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 0,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 0.75,
+                              ),
+                              itemBuilder: (context, index) {
+                                return jobContainer(
+                                    getJobsByCategory(_selectedTab)[index]);
+                              },
+                            )
                           : ListView.builder(
-                        itemCount: getJobsByCategory(_selectedTab).length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return jobContainer(getJobsByCategory(_selectedTab)[index]);
-                        },
-                      ),
+                              itemCount: getJobsByCategory(_selectedTab).length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return jobContainer(
+                                    getJobsByCategory(_selectedTab)[index]);
+                              },
+                            ),
                     ),
                   ],
                 ),
-
               if (!_isJobsExpanded) // Hide "Related to your interest" section if "Jobs" is expanded
                 Column(
                   children: [
@@ -201,7 +210,8 @@ class _JobsScreenState extends State<JobsScreen> {
                       children: [
                         Text(
                           'Related to your interest',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                              fontSize: 16, fontWeight: FontWeight.bold),
                         ),
                         GestureDetector(
                           onTap: () {
@@ -222,29 +232,36 @@ class _JobsScreenState extends State<JobsScreen> {
                       height: _isInterestExpanded ? null : 205,
                       child: _isInterestExpanded
                           ? GridView.builder(
-                        itemCount: getRelatedJobsByCategory(_selectedTab).length,
-                        shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 10,
-                          childAspectRatio: 0.75,
-                        ),
-                        itemBuilder: (context, index) {
-                          return relatedJobContainer(getRelatedJobsByCategory(_selectedTab)[index]);
-                        },
-                      )
+                              itemCount:
+                                  getRelatedJobsByCategory(_selectedTab).length,
+                              shrinkWrap: true,
+                              physics: NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.zero,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 0,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 0.75,
+                              ),
+                              itemBuilder: (context, index) {
+                                return relatedJobContainer(
+                                    getRelatedJobsByCategory(
+                                        _selectedTab)[index]);
+                              },
+                            )
                           : ListView.builder(
-                        itemCount: getRelatedJobsByCategory(_selectedTab).length,
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return relatedJobContainer(getRelatedJobsByCategory(_selectedTab)[index]);
-                        },
-                      ),
+                              itemCount:
+                                  getRelatedJobsByCategory(_selectedTab).length,
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (context, index) {
+                                return relatedJobContainer(
+                                    getRelatedJobsByCategory(
+                                        _selectedTab)[index]);
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -254,6 +271,7 @@ class _JobsScreenState extends State<JobsScreen> {
       ),
     );
   }
+
   Widget jobContainer(JobModel job) {
     return Container(
       width: 200,
@@ -273,7 +291,8 @@ class _JobsScreenState extends State<JobsScreen> {
               radius: 20,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: Text(job.title, style: TextStyle(fontWeight: FontWeight.bold)),
+            title:
+                Text(job.title, style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(job.datePosted),
           ),
           Text(job.location),
@@ -281,15 +300,16 @@ class _JobsScreenState extends State<JobsScreen> {
           // SizedBox(height: (_isJobsExpanded || _isInterestExpanded) ? 10 : 25),
           Center(
             child: GestureDetector(
-              onTap: (){
+              onTap: () {
                 _showBottomSheet(
-                    title: job.title,
-                    location: job.location,
-                    salary: job.salary,
-                    datePosted: job.datePosted,
-                    company: job.company,
-                    jobType: job.jobType,
-                );              },
+                  title: job.title,
+                  location: job.location,
+                  salary: job.salary,
+                  datePosted: job.datePosted,
+                  company: job.company,
+                  jobType: job.jobType,
+                );
+              },
               child: Container(
                 height: 44,
                 width: double.infinity,
@@ -298,7 +318,11 @@ class _JobsScreenState extends State<JobsScreen> {
                   color: Colors.grey[300],
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: Center(child: Text('Apply Now',style: TextStyle(color: Colors.blue),)),
+                child: Center(
+                    child: Text(
+                  'Apply Now',
+                  style: TextStyle(color: Colors.blue),
+                )),
               ),
             ),
           ),
@@ -326,7 +350,8 @@ class _JobsScreenState extends State<JobsScreen> {
               radius: 20,
               child: Icon(Icons.person, color: Colors.white),
             ),
-            title: Text(job.title, style: TextStyle(fontWeight: FontWeight.bold)),
+            title:
+                Text(job.title, style: TextStyle(fontWeight: FontWeight.bold)),
             subtitle: Text(job.datePosted),
           ),
           Text(job.location),
@@ -337,12 +362,12 @@ class _JobsScreenState extends State<JobsScreen> {
               child: GestureDetector(
                 onTap: () {
                   _showBottomSheet(
-                      title: job.title,
-                      location: job.location,
-                      salary: job.salary,
-                      datePosted: job.datePosted,
-                      company: job.company,
-                      jobType: job.jobType,
+                    title: job.title,
+                    location: job.location,
+                    salary: job.salary,
+                    datePosted: job.datePosted,
+                    company: job.company,
+                    jobType: job.jobType,
                   );
                 },
                 child: Container(
@@ -353,7 +378,9 @@ class _JobsScreenState extends State<JobsScreen> {
                     color: Colors.grey[300],
                     borderRadius: BorderRadius.circular(10),
                   ),
-                  child: Center(child: Text('Apply Now', style: TextStyle(color: Colors.blue))),
+                  child: Center(
+                      child: Text('Apply Now',
+                          style: TextStyle(color: Colors.blue))),
                 ),
               ),
             ),
@@ -363,10 +390,16 @@ class _JobsScreenState extends State<JobsScreen> {
     );
   }
 
-  void _showBottomSheet({required String title, required String location, required String salary, required String datePosted, required String company, required String jobType}) {
+  void _showBottomSheet(
+      {required String title,
+      required String location,
+      required String salary,
+      required String datePosted,
+      required String company,
+      required String jobType}) {
     showModalBottomSheet(
       context: context,
-      isScrollControlled: true,  // Isse bottom sheet ko full width milegi
+      isScrollControlled: true, // Isse bottom sheet ko full width milegi
       builder: (BuildContext context) {
         return Container(
           width: MediaQuery.of(context).size.width, // Full screen width
@@ -374,7 +407,64 @@ class _JobsScreenState extends State<JobsScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Job Details'),
+              Row(
+                children: [
+                  Center(
+                      child: Text(
+                    '               Job Details',
+                    style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+                  )),
+                  Row(
+                    children: [
+                      Container(
+                        margin: EdgeInsets.only(left: 100),
+                        child: PopupMenuButton(
+                          icon: Icon(
+                            Icons.more_vert,
+                            size: 20,
+                            color: Colors.black,
+                          ),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          color: Colors.white,
+                          itemBuilder: (BuildContext context) {
+                            return [
+                              PopupMenuItem(
+                                value: 'edit',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.edit, color: Colors.black),
+                                    SizedBox(width: 10),
+                                    Text('Edit'),
+                                  ],
+                                ),
+                              ),
+                              PopupMenuItem(
+                                value: 'delete',
+                                child: Row(
+                                  children: [
+                                    Icon(Icons.delete, color: Colors.red),
+                                    SizedBox(width: 10),
+                                    Text('Delete'),
+                                  ],
+                                ),
+                              ),
+                            ];
+                          },
+                          onSelected: (value) {
+                            if (value == 'edit') {
+                              print('Edit selected');
+                            } else if (value == 'delete') {
+                              print('Delete selected');
+                            }
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
               SizedBox(height: 20),
               Divider(),
               Padding(
@@ -396,21 +486,35 @@ class _JobsScreenState extends State<JobsScreen> {
                         radius: 20,
                         child: Icon(Icons.person, color: Colors.white),
                       ),
-                      title: Text('job.title', style: TextStyle(fontWeight: FontWeight.bold)),
+                      title: Text('job.title',
+                          style: TextStyle(fontWeight: FontWeight.bold)),
                       subtitle: Text('job.datePosted'),
                     ),
                     Text('3 week ago'),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: title),
-                    customRowWidget(icon: Icons.watch_outlined,title: location),
-                    customRowWidget(icon: Icons.light,title: salary),
-                    customRowWidget(icon: Icons.safety_check,title: datePosted),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: company),
-                    customRowWidget(icon: Icons.shopping_bag_outlined,title: jobType),
-                    SizedBox(height: 15,),
-                    CustomElevatedButton(onPressed: (){
-                      Navigator.pop(context);
-                      Navigator.push(context, MaterialPageRoute(builder:  (context) => ApplyToTangentScreen(),));
-                    }, text: 'Apply Now',
+                    customRowWidget(
+                        icon: Icons.shopping_bag_outlined, title: title),
+                    customRowWidget(
+                        icon: Icons.watch_outlined, title: location),
+                    customRowWidget(icon: Icons.light, title: salary),
+                    customRowWidget(
+                        icon: Icons.safety_check, title: datePosted),
+                    customRowWidget(
+                        icon: Icons.shopping_bag_outlined, title: company),
+                    customRowWidget(
+                        icon: Icons.shopping_bag_outlined, title: jobType),
+                    SizedBox(
+                      height: 15,
+                    ),
+                    CustomElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => ApplyToTangentScreen(),
+                            ));
+                      },
+                      text: 'Apply Now',
                     ),
                   ],
                 ),
@@ -422,14 +526,16 @@ class _JobsScreenState extends State<JobsScreen> {
     );
   }
 
-  Widget customRowWidget({required String title, required IconData icon}){
+  Widget customRowWidget({required String title, required IconData icon}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Icon(icon),
-          SizedBox(width: 12,),
+          SizedBox(
+            width: 12,
+          ),
           Flexible(child: Text(title)),
         ],
       ),

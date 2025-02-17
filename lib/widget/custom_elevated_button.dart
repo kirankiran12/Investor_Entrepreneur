@@ -48,7 +48,7 @@ class CustomElevatedButton extends StatelessWidget {
         minimumSize: const Size.fromHeight(45),
         padding: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(borderRadius ?? 50), // Fully rounded
+          borderRadius: BorderRadius.circular(borderRadius ?? 50), 
         ),
         elevation: elevation ?? 2,
       ),
@@ -56,12 +56,12 @@ class CustomElevatedButton extends StatelessWidget {
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: gradientColors ?? [
-              Colors.blue, Colors.purple, Colors.red, Colors.orange, // Default gradient
+              Colors.blue, Colors.purple, Colors.red, Colors.orange, 
             ],
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
           ),
-          borderRadius: BorderRadius.circular(borderRadius ?? 50), // Fully rounded
+          borderRadius: BorderRadius.circular(borderRadius ?? 50), 
         ),
         child: Container(
           width: width,

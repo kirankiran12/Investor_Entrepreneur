@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
+import 'package:investorentrepreneur/loginscreen/forgotscreen.dart';
 import 'package:investorentrepreneur/screen/home/homescreen.dart';
 
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
@@ -24,9 +25,10 @@ class _WelcomebackState extends State<Welcomeback> {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05, // Responsive padding
+          horizontal: screenWidth * 0.05,
           vertical: 50,
         ),
         child: SafeArea(
@@ -36,7 +38,7 @@ class _WelcomebackState extends State<Welcomeback> {
               Center(
                 child: CustomText(
                   text: "Welcome back 👋!",
-                  fontSize: 28, // Responsive font size
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -53,17 +55,17 @@ class _WelcomebackState extends State<Welcomeback> {
               const SizedBox(height: 20),
               TextButton(
                 onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(
-                  //     builder: (context) => const Forgetscreen(),
-                  //   ),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const Forgotscreen(),
+                    ),
+                  );
                 },
                 child: Column(
                   children: [
                     Container(
-                        margin: EdgeInsets.only(left: 20),
+                        margin: EdgeInsets.only(left: 100),
                         child: const Text('Forgot Password?')),
                   ],
                 ),
@@ -72,7 +74,7 @@ class _WelcomebackState extends State<Welcomeback> {
               Row(children: [
                 Checkbox(
                   value: isChecked,
-                  activeColor: Colors.black, // Color when checked
+                  activeColor: Colors.black,
                   onChanged: (bool? newValue) {
                     setState(() {
                       isChecked = newValue!;
@@ -86,13 +88,13 @@ class _WelcomebackState extends State<Welcomeback> {
               ]),
               Center(
                 child: CustomElevatedButton(
-                 onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Homescreen()),
-                      );
-                    },
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Homescreen()),
+                    );
+                  },
                   text: 'Sign up',
                 ),
               ),

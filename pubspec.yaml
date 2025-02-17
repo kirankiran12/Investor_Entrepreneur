@@ -37,7 +37,14 @@ dependencies:
   google_fonts: ^6.2.1
   video_player: ^2.9.2
   provider: ^6.1.2
+  country_picker: ^2.0.21
+  image_picker: ^0.8.7+5
+  flutter_sound: ^9.23.1
+  path_provider: ^2.1.5
+  permission_handler: ^11.3.1
 intl_phone_field: ^3.0.3
+flutter_sound: ^9.2.13
+permission_handler: ^11.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

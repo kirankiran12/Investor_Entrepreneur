@@ -1,13 +1,14 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
+import 'package:investorentrepreneur/enterpereneur/personaldetal.dart';
 import 'package:investorentrepreneur/loginscreen/signin.dart';
+import 'package:investorentrepreneur/Investor/investorpersonaldetail.dart';
+import 'package:investorentrepreneur/viewer/viewerpersonaldetail.dart';
 
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
-import 'package:investorentrepreneur/widget/rectangleshapeElevated%20widget.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -22,14 +23,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final nameController = TextEditingController();
   bool isChecked = false;
 
+  String selectedRole = "";
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: screenWidth * 0.05, // Responsive padding
+          horizontal: screenWidth * 0.05,
           vertical: 50,
         ),
         child: SafeArea(
@@ -39,73 +43,104 @@ class _SignUpScreenState extends State<SignUpScreen> {
               Center(
                 child: CustomText(
                   text: "Let’s Get Started 🚀!",
-                  fontSize: 28, // Responsive font size
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               const SizedBox(height: 15),
-
               CustomTextFormField(
                 controller: emailController,
                 hint: 'Email',
               ),
               const SizedBox(height: 20),
-
               CustomTextFormField(
                 controller: passwordController,
                 hint: 'Password',
               ),
               const SizedBox(height: 20),
-
               Text(
                 "Select your Role",
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
               const SizedBox(height: 10),
-
               Wrap(
                 spacing: 10,
                 runSpacing: 10,
                 children: [
-                  RectangleElevated(onPressed: () {}, text: "Entrepreneur",),
-                  RectangleElevated(onPressed: () {}, text: "Investor"),
-                  RectangleElevated(onPressed: () {}, text: "Viewer"),
-                ],
-              ),
-              const SizedBox(height: 20),
-
-             Row(
-               children: [
-                 Checkbox(
-                           value: isChecked,
-                           activeColor: Colors.blue, // Color when checked
-                           onChanged: (bool? newValue) {
-                             setState(() {
-                  isChecked = newValue!;
-                             });
-                           },
-                         ),
-              
-             
-        const Text(
-          "Remember me",
-          style: TextStyle(fontSize: 16),
-        ),]),
-
-              Center(
-                child: CustomElevatedButton(
-                    onPressed: () {
+                  _buildRoleButton(
+                    "Entrepreneur",
+                    selectedRole == "Entrepreneur",
+                    () {
+                      setState(() {
+                        selectedRole = "Entrepreneur";
+                      });
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Welcomeback()),
+                            builder: (context) => const Personaldetal()),
                       );
                     },
+                  ),
+                  _buildRoleButton(
+                    "Investor",
+                    selectedRole == "Investor",
+                    () {
+                      setState(() {
+                        selectedRole = "Investor";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                const InvestorPersonaldetal()),
+                      );
+                    },
+                  ),
+                  _buildRoleButton(
+                    "Viewer",
+                    selectedRole == "Viewer",
+                    () {
+                      setState(() {
+                        selectedRole = "Viewer";
+                      });
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const Viewerpersonaldetail()),
+                      );
+                    },
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
+              Row(children: [
+                Checkbox(
+                  value: isChecked,
+                  activeColor: Colors.blue,
+                  onChanged: (bool? newValue) {
+                    setState(() {
+                      isChecked = newValue!;
+                    });
+                  },
+                ),
+                const Text(
+                  "Remember me",
+                  style: TextStyle(fontSize: 16),
+                ),
+              ]),
+              Center(
+                child: CustomElevatedButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const Welcomeback()),
+                    );
+                  },
                   text: 'Sign up',
                 ),
               ),
               const SizedBox(height: 20),
-
               Row(
                 children: [
                   Expanded(
@@ -131,7 +166,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               const SizedBox(height: 40),
-
               Wrap(
                 alignment: WrapAlignment.center,
                 spacing: 15,
@@ -165,7 +199,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ],
               ),
               const SizedBox(height: 40),
-
               Center(
                 child: Text.rich(
                   TextSpan(
@@ -204,7 +237,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -225,13 +257,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 14,
-                      color: AppColor.blueColor,
+                        color: AppColor.blueColor,
                       ),
                     ),
                   ),
                 ],
               ),
             ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRoleButton(
+      String text, bool isSelected, VoidCallback onPressed) {
+    return GestureDetector(
+      onTap: onPressed,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+        decoration: BoxDecoration(
+          gradient: isSelected
+              ? const LinearGradient(
+                  colors: [
+                    Colors.blue,
+                    Colors.purple,
+                    Colors.red,
+                    Colors.orange
+                  ],
+                )
+              : null,
+          color: isSelected ? null : Colors.grey[300],
+          borderRadius: BorderRadius.circular(10),
+        ),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isSelected ? Colors.white : Colors.black,
+            fontWeight: FontWeight.bold,
           ),
         ),
       ),

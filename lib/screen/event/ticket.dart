@@ -62,7 +62,7 @@ class _TicketState extends State<Ticket> {
                   padding: EdgeInsets.all(screenWidth * 0.04),
                   decoration: BoxDecoration(
                      color: const Color.fromARGB(255, 199, 216, 247),
-                    // color: Colors.grey.shade100,
+                    
                     borderRadius: BorderRadius.circular(screenWidth * 0.03),
                   ),
                   child: Column(

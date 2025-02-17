@@ -1,15 +1,18 @@
+
 import 'package:flutter/material.dart';
 
 class GradientOutlinedButton extends StatelessWidget {
   final VoidCallback onPressed;
   final String text;
+  final IconData? icon;
   final List<Color> gradientColors;
 
   const GradientOutlinedButton({
     super.key,
     required this.onPressed,
     required this.text,
-    this.gradientColors = const [Colors.blue, Colors.purple, Colors.red, Colors.orange], // Default gradient
+    this.icon,
+    this.gradientColors = const [Colors.blue, Colors.purple, Colors.red, Colors.orange], 
   });
 
   @override
@@ -17,36 +20,57 @@ class GradientOutlinedButton extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: gradientColors, // Gradient border colors
+          colors: gradientColors, 
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
         ),
-        borderRadius: BorderRadius.circular(50),
+        borderRadius: BorderRadius.circular(100),
       ),
-      padding: EdgeInsets.all(2), // Thickness of the border
+      
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: Colors.white, // White button background
-          elevation: 0, // Remove shadow
+          backgroundColor: Colors.white, 
+          elevation: 0, 
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(100),
           ),
         ),
-        child: ShaderMask(
-          shaderCallback: (bounds) => LinearGradient(
-            colors: gradientColors, // Gradient text colors
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-          ).createShader(bounds),
-          child: Text(
-            text,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: Colors.white, // This color is masked by ShaderMask
+        child: Row(
+          mainAxisSize: MainAxisSize.min, 
+          children: [
+            
+            if (icon != null)
+              ShaderMask(
+                shaderCallback: (bounds) => LinearGradient(
+                  colors: gradientColors, 
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                ).createShader(bounds),
+                child: Icon(
+                  icon,
+                  size: 20,
+                  color: Colors.white, 
+                ),
+              ),
+            if (icon != null) const SizedBox(width: 8), 
+            
+            ShaderMask(
+              shaderCallback: (bounds) => LinearGradient(
+                colors: gradientColors, 
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ).createShader(bounds),
+              child: Text(
+                text,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.white, 
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );

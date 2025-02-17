@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
 import 'package:investorentrepreneur/screen/event/eventHome.dart';
+import 'package:investorentrepreneur/screen/home/create/createvideo/createvideo.dart';
+import 'package:investorentrepreneur/screen/home/create/eventCreate/eventCreate.dart';
+import 'package:investorentrepreneur/screen/home/create/jobcreate/createjob.dart';
+import 'package:investorentrepreneur/screen/home/create/podcastcreate/podcastcreate.dart';
 import 'package:investorentrepreneur/screen/home/filter/screen/filterscreen.dart';
 import 'package:investorentrepreneur/screen/home/map/videos.dart';
 import 'package:investorentrepreneur/screen/home/mapscreen/map.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/jobs_screen.dart';
 import 'package:investorentrepreneur/screen/podcast/podcast.dart';
 import 'package:investorentrepreneur/screen/profile/profilehome.dart';
+
 import 'package:investorentrepreneur/widget/bottom%20_navigationbar.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
 
@@ -36,7 +41,7 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.white,
       body: _screens[_selectedIndex],
       bottomNavigationBar: CustomBottomNavBar(
         selectedIndex: _selectedIndex,
@@ -95,10 +100,7 @@ class HomeScreenContent extends StatelessWidget {
                   backgroundColor: Colors.grey[200],
                   child: IconButton(
                     onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Filterscreen()),
-                      );
+                      _showBottomSheet(context);
                     },
                     icon: Icon(
                       Icons.add,
@@ -108,24 +110,57 @@ class HomeScreenContent extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 20),
-            Container(
-              height: 50,
-              padding: EdgeInsets.symmetric(horizontal: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: Colors.grey[200],
-              ),
-              child: TextField(
-                controller: _searchController,
-                onChanged: (value) {
-                  _searchQuery = value.toLowerCase();
-                },
-                decoration: InputDecoration(
-                  border: InputBorder.none,
-                  hintText: 'Search...',
-                  prefixIcon: Icon(Icons.search),
+            Row(
+              children: [
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    padding: EdgeInsets.symmetric(horizontal: 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      color: Colors.grey[200],
+                    ),
+                    child: TextField(
+                      controller: _searchController,
+                      onChanged: (value) {
+                        _searchQuery = value.toLowerCase();
+                      },
+                      decoration: InputDecoration(
+                        border: InputBorder.none,
+                        hintText: 'Search...',
+                        prefixIcon: Icon(Icons.search),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
+                const SizedBox(width: 5),
+                Container(
+                  height: 50,
+                  width: 80,
+                  child: ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey[200],
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Filterscreen(),
+                        ),
+                      );
+                    },
+                    icon: Icon(
+                      Icons.last_page,
+                      size: 24,
+                      color: Colors.black,
+                    ),
+                    label: SizedBox.shrink(),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 40),
             Text(
@@ -185,6 +220,78 @@ class HomeScreenContent extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      backgroundColor: Colors.white,
+      context: context,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+      ),
+      builder: (context) {
+        return Padding(
+          padding: const EdgeInsets.all(20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Center(
+                  child: Text(
+                'Create',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              )),
+              ListTile(
+                leading:
+                    const Icon(Icons.videocam_outlined, color: Colors.black),
+                title: const Text("Videos"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Createvideo()),
+                  );
+                },
+              ),
+              const Divider(),
+              ListTile(
+                leading:
+                    const Icon(Icons.podcasts_outlined, color: Colors.black),
+                title: const Text("Podcast"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const Createpodcaste()),
+                  );
+                  },
+              ),
+              const Divider(),
+              ListTile(
+                leading: const Icon(Icons.event, color: Colors.black),
+                title: const Text("Event"),
+                onTap: () { Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CreateEvent()),
+                  );},
+              ),
+              const Divider(),
+              ListTile(
+                leading:
+                    const Icon(Icons.find_in_page_sharp, color: Colors.black),
+                title: const Text("jobs"),
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const CreateJob()),
+                  );
+                },
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 }

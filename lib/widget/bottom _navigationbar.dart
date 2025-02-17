@@ -15,8 +15,8 @@ class CustomBottomNavBar extends StatelessWidget {
     return BottomNavigationBar(
       currentIndex: selectedIndex,
       onTap: onItemTapped,
-      selectedItemColor: Colors.blue, // Active color
-      unselectedItemColor: Colors.grey, // Inactive color
+      selectedItemColor: Colors.blue, 
+      unselectedItemColor: Colors.grey, 
       showUnselectedLabels: true,
       items: [
         BottomNavigationBarItem(icon: Icon(Icons.video_library), label: "Videos"),

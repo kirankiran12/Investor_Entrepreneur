@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/screen/home/map/videos.dart';
 import 'package:investorentrepreneur/widget/videoplayer.widget.dart';
@@ -57,6 +56,53 @@ class _PodcastCategoryState extends State<PodcastCategory> {
                               fontSize: screenWidth * 0.06,
                               fontWeight: FontWeight.bold,
                               color: Colors.black)),
+                    ],
+                  ),
+                  SizedBox(width: 80),
+                  Row(
+                    children: [
+                      PopupMenuButton(
+                        icon: Icon(
+                          Icons.more_vert,
+                          size: screenWidth * 0.07,
+                          color: Colors.black,
+                        ),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        color: Colors.white,
+                        itemBuilder: (BuildContext context) {
+                          return [
+                            PopupMenuItem(
+                              value: 'edit',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.edit, color: Colors.black),
+                                  SizedBox(width: 10),
+                                  Text('Edit'),
+                                ],
+                              ),
+                            ),
+                            PopupMenuItem(
+                              value: 'delete',
+                              child: Row(
+                                children: [
+                                  Icon(Icons.delete, color: Colors.red),
+                                  SizedBox(width: 10),
+                                  Text('Delete'),
+                                ],
+                              ),
+                            ),
+                          ];
+                        },
+                        onSelected: (value) {
+                          if (value == 'edit') {
+                            print('Edit selected');
+                          } else if (value == 'delete') {
+                            print('Delete selected');
+                          }
+                        },
+                      ),
                     ],
                   ),
                   IconButton(
@@ -182,7 +228,7 @@ class _PodcastCategoryState extends State<PodcastCategory> {
         children: [
           CircleAvatar(
               radius: screenWidth * 0.03,
-              backgroundImage: AssetImage('assets/images/podcast.jpeg')),
+              backgroundImage: AssetImage('assets/images/host.jpeg')),
           SizedBox(width: screenWidth * 0.02),
           Text(label,
               style: TextStyle(
