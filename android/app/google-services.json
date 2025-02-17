@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "361572333927",
+    "project_id": "social-media-app-4960d",
+    "storage_bucket": "social-media-app-4960d.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361572333927:android:2281e0e81f01f196e4d7c2",
+        "android_client_info": {
+          "package_name": "com.example.investorentrepreneur"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEikVvMmuvvmwhLbo0dVkh4tJXYOwAzXE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
