@@ -414,10 +414,11 @@ class _JobsScreenState extends State<JobsScreen> {
                     '               Job Details',
                     style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
                   )),
+                  Spacer(),
                   Row(
                     children: [
                       Container(
-                        margin: EdgeInsets.only(left: 100),
+                        // margin: EdgeInsets.only(left: 100),
                         child: PopupMenuButton(
                           icon: Icon(
                             Icons.more_vert,

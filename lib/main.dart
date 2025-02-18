@@ -1,14 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
-
 import 'package:investorentrepreneur/screen/home/filter/provider/filter_provider.dart';
-
 import 'package:investorentrepreneur/splashscreen/splashscreen.dart';
 import 'package:provider/provider.dart';
 
 
 void main() async{
+  WidgetsFlutterBinding.ensureInitialized();
 WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   
@@ -31,7 +29,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const Splashscreen(),
-        // home: const JobFilterScreen(),
+       
       ),
     );
   }

@@ -138,6 +138,7 @@ class _TicketdetailState extends State<Ticketdetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "General Admission",
@@ -147,7 +148,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.03),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,
@@ -160,7 +160,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         Text(
                           "1",
                           style: TextStyle(
@@ -169,7 +168,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8) ),
@@ -230,6 +228,7 @@ class _TicketdetailState extends State<Ticketdetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Premium Ticket",
@@ -239,7 +238,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.090),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,
@@ -252,7 +250,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         Text(
                           "0",
                           style: TextStyle(
@@ -261,7 +258,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8) ),
@@ -321,6 +317,7 @@ class _TicketdetailState extends State<Ticketdetail> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
                           "Early Access",
@@ -330,7 +327,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.150),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,
@@ -343,7 +339,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             color: Colors.white,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         Text(
                           "0",
                           style: TextStyle(
@@ -352,7 +347,6 @@ class _TicketdetailState extends State<Ticketdetail> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.02),
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blueAccent,shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8) ),
