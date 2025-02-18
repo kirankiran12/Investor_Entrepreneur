@@ -17,15 +17,31 @@ class _CreatevideoState extends State<Createvideo> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+        title: Text(
+          "Create Video",
+          style: TextStyle(
+            fontSize: 22,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new_rounded,size: 20,),
+          onPressed: (){
+            Navigator.pop(context);
+          },),
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.05),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 20),
-              _buildHeader(context),
-              const SizedBox(height: 20),
+              // const SizedBox(height: 20),
+              // // _buildHeader(context),
+              // const SizedBox(height: 20),
               Expanded(child: _buildGridView()),
             ],
           ),
@@ -34,20 +50,20 @@ class _CreatevideoState extends State<Createvideo> {
     );
   }
 
-  Widget _buildHeader(BuildContext context) {
-    return Row(
-      children: [
-        IconButton(
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
-          onPressed: () => Navigator.pop(context),
-        ),
-        const Text(
-          "Create video",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
-        ),
-      ],
-    );
-  }
+  // Widget _buildHeader(BuildContext context) {
+  //   return Row(
+  //     children: [
+  //       IconButton(
+  //         icon: const Icon(Icons.arrow_back_ios, color: Colors.black),
+  //         onPressed: () => Navigator.pop(context),
+  //       ),
+  //       const Text(
+  //         "Create video",
+  //         style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget _buildGridView() {
     return GridView.builder(

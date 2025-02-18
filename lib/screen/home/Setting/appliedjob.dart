@@ -21,29 +21,32 @@ class _AppliedjobState extends State<Appliedjob> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Column(
-         children: [
-           Row(
-                  
-                  children: [
-                    IconButton(
-                      icon: Icon(Icons.arrow_back_ios,
-                          size: screenWidth * 0.07, color: Colors.black),
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    CustomText(
-                      text: "Applied job",
-                      fontSize: screenWidth * 0.06,
-                      fontWeight: FontWeight.bold,
-                    ),
-                   
-                  ],
-                ),
-            SizedBox(height: 20,),
-             Expanded(child: _buildJobGrid()),
-         ] ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+           children: [
+             Row(
+
+                    children: [
+                      IconButton(
+                        icon: Icon(Icons.arrow_back_ios,
+                            size: screenWidth * 0.07, color: Colors.black),
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                      ),
+                      CustomText(
+                        text: "Applied job",
+                        fontSize: screenWidth * 0.06,
+                        fontWeight: FontWeight.bold,
+                      ),
+
+                    ],
+                  ),
+              SizedBox(height: 20,),
+               Expanded(child: _buildJobGrid()),
+           ] ),
+        ),
         ),
       );
     

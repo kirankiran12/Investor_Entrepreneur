@@ -246,6 +246,7 @@ class HomeScreenContent extends StatelessWidget {
                     const Icon(Icons.videocam_outlined, color: Colors.black),
                 title: const Text("Videos"),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -259,6 +260,7 @@ class HomeScreenContent extends StatelessWidget {
                     const Icon(Icons.podcasts_outlined, color: Colors.black),
                 title: const Text("Podcast"),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(
@@ -270,7 +272,9 @@ class HomeScreenContent extends StatelessWidget {
               ListTile(
                 leading: const Icon(Icons.event, color: Colors.black),
                 title: const Text("Event"),
-                onTap: () { Navigator.push(
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
                         builder: (context) => const CreateEvent()),
@@ -282,6 +286,7 @@ class HomeScreenContent extends StatelessWidget {
                     const Icon(Icons.find_in_page_sharp, color: Colors.black),
                 title: const Text("jobs"),
                 onTap: () {
+                  Navigator.pop(context);
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => const CreateJob()),
