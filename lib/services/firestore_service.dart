@@ -1,11 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/foundation.dart';
 import 'package:investorentrepreneur/models/events_model.dart';
 import 'package:investorentrepreneur/models/podcast_model.dart';
 
 class FirestoreService{
   final FirebaseFirestore _firestoreService = FirebaseFirestore.instance;
-  final FirebaseFirestore _firestoreServicePodcast = FirebaseFirestore.instance;
 
   Future<void> addEvent(Event event) async {
     try {
@@ -23,7 +23,7 @@ class FirestoreService{
 
   Future<void> addPodcast(Podcast podcast) async{
     try{
-      await _firestoreServicePodcast.collection('podcasts').doc(podcast.id).set(podcast.toMap());
+      await _firestoreService.collection('podcasts').doc(podcast.id).set(podcast.toMap());
       if(kDebugMode){
         print("✅ Podcast successfully added!");
       }
@@ -33,4 +33,5 @@ class FirestoreService{
       }
     }
   }
+
 }

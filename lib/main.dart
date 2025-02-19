@@ -13,7 +13,9 @@ import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+
   runApp(const MyApp());
 }
 
@@ -33,6 +35,7 @@ class MyApp extends StatelessWidget {
           useMaterial3: true,
         ),
         home: const Splashscreen(),
+
         // home: const Splashscreen(),
         // home: const JobFilterScreen(),
       ),

@@ -175,12 +175,12 @@ class _CreatepodcasteState extends State<Createpodcaste> {
                     child: CustomElevatedButton(
                       isLoading: isLoading,
                       onPressed: ()async{
-                        setState(() {
-                          isLoading = true;
-                        });
-                        String? imageUrl = await _firebaseStorageService.uploadImagePodcast(_imageFile!);
-                        DocumentReference docRef = FirebaseFirestore.instance.collection('events').doc();
-                        if(_validateForm()){
+                       if(_validateForm()){
+                         setState(() {
+                           isLoading = true;
+                         });
+                         String? imageUrl = await _firebaseStorageService.uploadImagePodcast(_imageFile!);
+                         DocumentReference docRef = FirebaseFirestore.instance.collection('podcasts').doc();
                          if(imageUrl != null){
                            Podcast podcast = Podcast(
                                id: docRef.id,
@@ -204,8 +204,11 @@ class _CreatepodcasteState extends State<Createpodcaste> {
                            });
 
                          }
-                        }
-                        Navigator.pop(context);
+                         titleController.clear();
+                         podcastetypeController.clear();
+                         descriptionController.clear();
+                         _imageFile = null;
+                       }
                       },
                       text: 'Publish now',
                     ),

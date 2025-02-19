@@ -20,7 +20,7 @@ class _JobApplyScreenState extends State<JobApplyScreen> {
                   padding: const EdgeInsets.all(10.0),
                   child: GestureDetector(
                       onTap: (){
-                        Navigator.pop(context);
+                        Navigator.pop(context, 'Discard');
                       },
                       child: Icon(Icons.close)),
                 ),

@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/screen/jobs/screen/job_apply_screen.dart';
@@ -11,6 +14,24 @@ class ApplyToTangentScreen extends StatefulWidget {
 
 class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
   String selectedFilterNavBar = "Discard";
+  File? _selectedFile;
+  bool isUploading = false;
+  String? downloadUrl;
+
+  Future<void> pickFile()async{
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.custom,
+      allowedExtensions: [
+        'pdf', 'doc', 'docx'
+      ],
+    );
+    if(result != null){
+      setState(() {
+        _selectedFile = File(result.files.single.path!);
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,8 +49,13 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
             children: [
               Expanded(child: _buildFilterButtonNavBar("Discard",height: 55,width: double.infinity)),
               SizedBox(width: 10,),
-              Expanded(child: _buildFilterButtonNavBar("Apply",height: 55,width: double.infinity,onTap: (){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => JobApplyScreen(),));
+              Expanded(child: _buildFilterButtonNavBar("Apply",height: 55,width: double.infinity,onTap: ()async{
+                final result = await Navigator.push(context, MaterialPageRoute(builder: (context) => JobApplyScreen(),));
+                if(result == 'Discard'){
+                  setState(() {
+                    selectedFilterNavBar = 'Discard';
+                  });
+                }
               })),
             ],
           ),
@@ -87,13 +113,16 @@ class _ApplyToTangentScreenState extends State<ApplyToTangentScreen> {
               SizedBox(height: 16,),
               Text('Upload resume'),
               SizedBox(height: 10,),
-              Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: AppColor.gryColor.withValues(alpha: (0.8 * 255).toDouble()),
-                  borderRadius: BorderRadius.circular(20)
+              GestureDetector(
+                onTap: pickFile,
+                child: Container(
+                  padding: EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    color: AppColor.gryColor.withValues(alpha: (0.8 * 255).toDouble()),
+                    borderRadius: BorderRadius.circular(20)
+                  ),
+                  child: Center(child: Text(_selectedFile == null ? 'Upload resume' : 'File Selected: ${_selectedFile?.path.split('/').last}',style: TextStyle(color: Colors.blue),)),
                 ),
-                child: Center(child: Text('Upload resume',style: TextStyle(color: Colors.blue),)),
               ),
               SizedBox(height: 16,),
               Text('Addition Details',style: TextStyle(fontWeight: FontWeight.w500,fontSize: 16),),

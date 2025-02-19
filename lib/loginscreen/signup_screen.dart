@@ -1,14 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:investorentrepreneur/common/app_color.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
 import 'package:investorentrepreneur/enterpereneur/personaldetal.dart';
-import 'package:investorentrepreneur/loginscreen/login_screen.dart';
 import 'package:investorentrepreneur/Investor/investorpersonaldetail.dart';
 import 'package:investorentrepreneur/viewer/viewerpersonaldetail.dart';
-
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({super.key});
@@ -22,8 +23,96 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   bool isChecked = false;
-
   String selectedRole = "";
+  String? emailError;
+  String? passwordError;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Google Sign-In
+  Future<UserCredential?> loginWithGoogle() async {
+    try {
+      final googleUser = await GoogleSignIn().signIn();
+      final googleAuth = await googleUser?.authentication;
+      final cred = GoogleAuthProvider.credential(
+          idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
+
+      return await _auth.signInWithCredential(cred);
+    } catch (e) {
+      print(e.toString());
+    }
+    return null;
+  }
+
+  // Email Validation
+  bool isValidEmail(String email) {
+    String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+    RegExp regExp = RegExp(emailPattern);
+    return regExp.hasMatch(email);
+  }
+
+  // Password Validation
+  bool isValidPassword(String password) {
+    return password.length >= 6;
+  }
+
+  // Sign Up User
+  void signUpUser() {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    setState(() {
+      emailError = null;
+      passwordError = null;
+    });
+
+    if (email.isEmpty || password.isEmpty) {
+      Fluttertoast.showToast(msg: "Please fill in all fields");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      setState(() {
+        emailError = "Invalid email format!";
+      });
+      return;
+    }
+
+    if (!isValidPassword(password)) {
+      setState(() {
+        passwordError = "Password must be at least 6 characters!";
+      });
+      return;
+    }
+
+    _auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) {
+      Fluttertoast.showToast(msg: "Sign Up Successful!");
+
+   
+      if (selectedRole == "Entrepreneur") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Personaldetal()),
+        );
+      } else if (selectedRole == "Investor") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+              builder: (context) => const InvestorPersonaldetal()),
+        );
+      } else if (selectedRole == "Viewer") {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const Viewerpersonaldetail()),
+        );
+      } else {
+        Fluttertoast.showToast(msg: "Please select a role.");
+      }
+    }).catchError((error) {
+      Fluttertoast.showToast(msg: "Sign Up Failed: ${error.message}");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,11 +140,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
               CustomTextFormField(
                 controller: emailController,
                 hint: 'Email',
+                errorText: emailError,
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
                 controller: passwordController,
                 hint: 'Password',
+                obscureText: true,
+                errorText: passwordError,
               ),
               const SizedBox(height: 20),
               Text(
@@ -68,48 +160,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 runSpacing: 10,
                 children: [
                   _buildRoleButton(
-                    "Entrepreneur",
-                    selectedRole == "Entrepreneur",
-                    () {
-                      setState(() {
-                        selectedRole = "Entrepreneur";
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Personaldetal()),
-                      );
-                    },
-                  ),
-                  _buildRoleButton(
-                    "Investor",
-                    selectedRole == "Investor",
-                    () {
-                      setState(() {
-                        selectedRole = "Investor";
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                const InvestorPersonaldetal()),
-                      );
-                    },
-                  ),
-                  _buildRoleButton(
-                    "Viewer",
-                    selectedRole == "Viewer",
-                    () {
-                      setState(() {
-                        selectedRole = "Viewer";
-                      });
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Viewerpersonaldetail()),
-                      );
-                    },
-                  ),
+                      "Entrepreneur", selectedRole == "Entrepreneur", () {
+                    setState(() => selectedRole = "Entrepreneur");
+                  }),
+                  _buildRoleButton("Investor", selectedRole == "Investor", () {
+                    setState(() => selectedRole = "Investor");
+                  }),
+                  _buildRoleButton("Viewer", selectedRole == "Viewer", () {
+                    setState(() => selectedRole = "Viewer");
+                  }),
                 ],
               ),
               const SizedBox(height: 20),
@@ -130,39 +189,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ]),
               Center(
                 child: CustomElevatedButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const WelcomeBackScreen()),
-                    );
-                  },
-                  text: 'Sign up',
+                  onPressed: signUpUser,
+                  text: 'Sign Up',
                 ),
               ),
               const SizedBox(height: 20),
               Row(
                 children: [
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  ),
+                  Expanded(child: Divider(color: Colors.grey, thickness: 1)),
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      "Continue with",
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-                    ),
+                    child: Text("Continue with",
+                        style: TextStyle(
+                            fontSize: 16, fontWeight: FontWeight.bold)),
                   ),
-                  Expanded(
-                    child: Divider(
-                      color: Colors.grey,
-                      thickness: 1,
-                    ),
-                  ),
+                  Expanded(child: Divider(color: Colors.grey, thickness: 1)),
                 ],
               ),
               const SizedBox(height: 40),
@@ -171,7 +212,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 spacing: 15,
                 runSpacing: 10,
                 children: [
-                  CircleAvatar(
+                CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.grey[200],
                     child: Image.asset('assets/images/instagram.png'),
@@ -204,64 +245,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   TextSpan(
                     text: 'By proceeding you agree to investors',
                     style: GoogleFonts.inter(
-                      fontSize: 16,
-                      fontWeight: FontWeight.bold,
-                    ),
+                        fontSize: 16, fontWeight: FontWeight.bold),
                     children: [
                       TextSpan(
-                        text: ' Terms of Use ',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          color: AppColor.blueColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          text: ' Terms of Use ',
+                          style: GoogleFonts.inter(
+                              fontSize: 16,
+                              color: AppColor.blueColor,
+                              fontWeight: FontWeight.bold)),
                       TextSpan(
-                        text: 'and ',
-                        style: GoogleFonts.inter(
-                          fontSize: 12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          text: 'and ',
+                          style: GoogleFonts.inter(
+                              fontSize: 12, fontWeight: FontWeight.bold)),
                       TextSpan(
-                        text: 'Privacy Policy ',
-                        style: GoogleFonts.inter(
-                          fontSize: 16,
-                          color: AppColor.blueColor,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+                          text: 'Privacy Policy ',
+                          style: GoogleFonts.inter(
+                              fontSize: 16,
+                              color: AppColor.blueColor,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
                   textAlign: TextAlign.center,
                 ),
-              ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    " Already have an account? ",
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const WelcomeBackScreen()),
-                      );
-                    },
-                    child: const Text(
-                      "Login",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                        color: AppColor.blueColor,
-                      ),
-                    ),
-                  ),
-                ],
               ),
             ],
           ),
@@ -270,7 +275,23 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  Widget _buildRoleButton(
+  // Widget _buildRoleButton(
+  //     String text, bool isSelected, VoidCallback onPressed) {
+  //   return GestureDetector(
+  //     onTap: onPressed,
+  //     child: Container(
+  //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+  //       decoration: BoxDecoration(
+  //         color: isSelected ? Colors.blue : Colors.grey[300],
+  //         borderRadius: BorderRadius.circular(10),
+  //       ),
+  //       child: Text(text,
+  //           style: TextStyle(
+  //               color: isSelected ? Colors.white : Colors.black,
+  //               fontWeight: FontWeight.bold)),
+  //     ),
+  //   );
+   Widget _buildRoleButton(
       String text, bool isSelected, VoidCallback onPressed) {
     return GestureDetector(
       onTap: onPressed,
@@ -300,4 +321,5 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-}
+  }
+

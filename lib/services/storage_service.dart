@@ -36,4 +36,17 @@ class FirebaseStorageService {
       return null;
     }
   }
+
+  Future<String?> uploadFile(File file, String fileName)async{
+    try{
+      Reference ref = _storage.ref().child('resume/$fileName');
+      UploadTask uploadTask = ref.putFile(file);
+      TaskSnapshot snapshot = await uploadTask;
+      String downloadUrl = await snapshot.ref.getDownloadURL();
+      return downloadUrl;
+    }catch(e){
+      print('❌ Error uploading file: $e');
+      return null;
+    }
+  }
 }

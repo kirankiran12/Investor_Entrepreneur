@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:investorentrepreneur/common/customtext.dart';
-import 'package:investorentrepreneur/loginscreen/donepasswoed.dart';
-import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
@@ -16,8 +14,8 @@ class _ForgotscreenState extends State<Forgotscreen> {
   final nameController = TextEditingController();
   final emailController = TextEditingController();
   final noController = TextEditingController();
-  final dateController = TextEditingController();
-  final passwordController = TextEditingController();
+  final newController = TextEditingController();
+  final newpasswordController = TextEditingController();
 
   String? selectedCountryCode;
   String? phoneNumber;
@@ -60,67 +58,57 @@ class _ForgotscreenState extends State<Forgotscreen> {
               SizedBox(
                 height: 20,
               ),
-              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                const SizedBox(height: 15),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    'Current password*',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-                CustomTextFormField(
-                  controller: nameController,
-                  hint: 'Current password',
-                ),
-                const SizedBox(height: 15),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    'New password',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-                CustomTextFormField(
-                  controller: dateController,
-                  hint: 'New password',
-                ),
-                const SizedBox(height: 15),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    'Re_type new password',
-                    style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                ),
-                CustomTextFormField(
-                  controller: emailController,
-                  hint: 'Re_type new password',
-                ),
-                const SizedBox(height: 50),
-                Center(
-                  child: Column(children: [
-                    CustomElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => DonepasswordScreen()));
-                      },
-                      text: '  "Change password',
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Current password*',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
                     ),
-                  ]),
-                ),
-              ]),
+                  ),
+                  CustomTextFormField(
+                    controller: nameController,
+                    hint: 'Current password',
+                  ),
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'New password',
+                      style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black),
+                    ),
+                  ),
+                  CustomTextFormField(
+                    controller: newController,
+                    hint: 'New password',
+                  ),
+                  const SizedBox(height: 15),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: const Text(
+                      'Re_type new password',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                   CustomTextFormField(
+                    controller: newpasswordController,
+                    hint: 'Retype new password',
+                  ),
+                  const SizedBox(height: 15),
+                ],
+              ),
             ],
           ),
         ),

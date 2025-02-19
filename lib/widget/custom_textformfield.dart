@@ -94,7 +94,7 @@ class CustomTextFormField extends StatelessWidget {
     this.onFieldSubmitted,
     this.onTapOutside,
     this.controller,
-    this.validator,
+    this.validator, String? errorText,
   }) : super(key: key);
 
   @override
