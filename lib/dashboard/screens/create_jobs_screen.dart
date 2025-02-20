@@ -4,17 +4,17 @@ import 'package:investorentrepreneur/screen/home/create/jobcreate/donejob.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
-class CreateJob extends StatefulWidget {
-  const CreateJob({super.key});
+class CreateJobsScreen extends StatefulWidget {
+  const CreateJobsScreen({super.key});
 
   @override
-  State<CreateJob> createState() => _CreateJobState();
+  State<CreateJobsScreen> createState() => _CreateJobsScreenState();
 }
 
-class _CreateJobState extends State<CreateJob> {
-  final TextEditingController jobtitleController = TextEditingController();
+class _CreateJobsScreenState extends State<CreateJobsScreen> {
+  final TextEditingController jobTitleController = TextEditingController();
   final TextEditingController workplaceController = TextEditingController();
-  final TextEditingController jobshiftController = TextEditingController();
+  final TextEditingController jobShiftController = TextEditingController();
   final TextEditingController experienceController = TextEditingController();
   final salaryController = TextEditingController();
   final travelTimeController = TextEditingController();
@@ -32,22 +32,6 @@ class _CreateJobState extends State<CreateJob> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        title: Text(
-          "Create Job",
-          style: TextStyle(
-            fontSize: 22,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,size: 20,),
-          onPressed: (){
-          Navigator.pop(context);
-        },),
-      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -56,9 +40,30 @@ class _CreateJobState extends State<CreateJob> {
           ),
           child: Column(
             children: [
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.chevron_left_sharp,
+                        size: 30, color: Colors.black),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                  ),
+                  const Text(
+                    "Create Job",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 20),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  const SizedBox(height: 15),
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
@@ -71,7 +76,7 @@ class _CreateJobState extends State<CreateJob> {
                   ),
                   _buildDropdownField(
                     context: context,
-                    controller: jobtitleController,
+                    controller: jobTitleController,
                     hint: 'Enter title',
                     options: [
                       "Tech&Entrepreneur",
@@ -128,7 +133,7 @@ class _CreateJobState extends State<CreateJob> {
                   ),
                   _buildDropdownField(
                     context: context,
-                    controller: jobshiftController,
+                    controller: jobShiftController,
                     hint: 'Select job shift',
                     options: [
                       "Day Shift",
@@ -369,7 +374,7 @@ class _CreateJobState extends State<CreateJob> {
                             title: Text(option),
                             value: option,
                             groupValue:
-                                isOtherSelected ? null : controller.text,
+                            isOtherSelected ? null : controller.text,
                             onChanged: (value) {
                               if (value == "Other (please specify)") {
                                 setState(() {

@@ -11,3 +11,11 @@ class AppIcons{
   static const setting = 'assets/icons/photomrge.svg';
   // static const onboardingImage = 'assets/icons/person.jpg';
 }
+
+class DashboardImage{
+  static const eventsImage = 'assets/dashboard/events.png';
+  static const jobsImage = 'assets/dashboard/jobs.png';
+  static const podcastImage = 'assets/dashboard/podcast.png';
+  static const profileImage = 'assets/dashboard/profile.png';
+  static const videosImage = 'assets/dashboard/videos.png';
+}

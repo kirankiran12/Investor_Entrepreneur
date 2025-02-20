@@ -132,7 +132,7 @@ class _MyeventState extends State<Myevent> {
             left: 0,
             right: 0,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 6),
               decoration: BoxDecoration(
                 color: const Color.fromARGB(255, 57, 57, 57).withOpacity(0.5),
                 borderRadius: const BorderRadius.vertical(

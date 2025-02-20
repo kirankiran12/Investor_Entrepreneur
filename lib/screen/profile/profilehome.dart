@@ -241,7 +241,7 @@ class _ProfileHomeState extends State<ProfileHome> {
           children: [
             Expanded(
               child: Padding(
-                padding: EdgeInsets.all(screenWidth * 0.05),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: Column(
                   children: [
                     Row(
@@ -334,7 +334,6 @@ class _ProfileHomeState extends State<ProfileHome> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 5),
                     Row(
                       children: [
                         Expanded(
@@ -364,7 +363,7 @@ class _ProfileHomeState extends State<ProfileHome> {
                             ),
                           ),
                         ),
-                        SizedBox(width: screenWidth * 0.03),
+                        SizedBox(width: 12,),
                         Expanded(
                           child: ElevatedButton(
                             style: ElevatedButton.styleFrom(

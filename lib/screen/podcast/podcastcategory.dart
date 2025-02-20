@@ -30,6 +30,69 @@ class _PodcastCategoryState extends State<PodcastCategory> {
     int gridCrossAxisCount = screenWidth > 600 ? 3 : 2;
 
     return Scaffold(
+      appBar: AppBar(
+        title: Text("Podcast",
+            style: TextStyle(
+                fontSize: screenWidth * 0.06,
+                fontWeight: FontWeight.bold,
+                color: Colors.black)),
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios_new_rounded,size: 22,),onPressed: (){
+          Navigator.pop(context);
+        },),
+        actions: [
+          PopupMenuButton(
+            icon: Icon(
+              Icons.more_vert,
+              size: screenWidth * 0.07,
+              color: Colors.black,
+            ),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
+            ),
+            color: Colors.white,
+            itemBuilder: (BuildContext context) {
+              return [
+                PopupMenuItem(
+                  value: 'edit',
+                  child: Row(
+                    children: [
+                      Icon(Icons.edit, color: Colors.black),
+                      SizedBox(width: 10),
+                      Text('Edit'),
+                    ],
+                  ),
+                ),
+                PopupMenuItem(
+                  value: 'delete',
+                  child: Row(
+                    children: [
+                      Icon(Icons.delete, color: Colors.red),
+                      SizedBox(width: 10),
+                      Text('Delete'),
+                    ],
+                  ),
+                ),
+              ];
+            },
+            onSelected: (value) {
+              if (value == 'edit') {
+                print('Edit selected');
+              } else if (value == 'delete') {
+                print('Delete selected');
+              }
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.bookmark_border,
+                size: screenWidth * 0.07, color: Colors.black),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+        ],
+        backgroundColor: Colors.white,
+        surfaceTintColor: Colors.white,
+      ),
       body: Container(
         color: Colors.white,
         child: SingleChildScrollView(
@@ -38,83 +101,6 @@ class _PodcastCategoryState extends State<PodcastCategory> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    children: [
-                      IconButton(
-                        icon: Icon(Icons.arrow_back_ios,
-                            size: screenWidth * 0.07, color: Colors.black),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      ),
-                      SizedBox(width: 8),
-                      Text("Podcast",
-                          style: TextStyle(
-                              fontSize: screenWidth * 0.06,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black)),
-                    ],
-                  ),
-                  SizedBox(width: 80),
-                  Row(
-                    children: [
-                      PopupMenuButton(
-                        icon: Icon(
-                          Icons.more_vert,
-                          size: screenWidth * 0.07,
-                          color: Colors.black,
-                        ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        color: Colors.white,
-                        itemBuilder: (BuildContext context) {
-                          return [
-                            PopupMenuItem(
-                              value: 'edit',
-                              child: Row(
-                                children: [
-                                  Icon(Icons.edit, color: Colors.black),
-                                  SizedBox(width: 10),
-                                  Text('Edit'),
-                                ],
-                              ),
-                            ),
-                            PopupMenuItem(
-                              value: 'delete',
-                              child: Row(
-                                children: [
-                                  Icon(Icons.delete, color: Colors.red),
-                                  SizedBox(width: 10),
-                                  Text('Delete'),
-                                ],
-                              ),
-                            ),
-                          ];
-                        },
-                        onSelected: (value) {
-                          if (value == 'edit') {
-                            print('Edit selected');
-                          } else if (value == 'delete') {
-                            print('Delete selected');
-                          }
-                        },
-                      ),
-                    ],
-                  ),
-                  IconButton(
-                    icon: Icon(Icons.bookmark_border,
-                        size: screenWidth * 0.07, color: Colors.black),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(height: screenHeight * 0.03),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

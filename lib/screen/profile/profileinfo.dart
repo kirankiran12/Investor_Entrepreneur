@@ -53,9 +53,8 @@ class _ProfileinfoState extends State<Profileinfo> {
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05,
-            vertical: screenHeight * 0.03,
+          padding: EdgeInsets.all(
+           16
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -72,7 +71,7 @@ class _ProfileinfoState extends State<Profileinfo> {
                   ),
                   CustomText(
                     text: "Profile information",
-                    fontSize: 22,
+                    fontSize: 20,
                     fontWeight: FontWeight.bold,
                   ),
                   Spacer(),
