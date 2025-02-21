@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:investorentrepreneur/loginscreen/authcontrol.dart';
 
 
 import 'package:investorentrepreneur/screen/home/filter/provider/filter_provider.dart';
@@ -20,7 +21,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(providers: [
-      ChangeNotifierProvider(create: (context) => ExpansionTileState(),)
+      ChangeNotifierProvider(create: (context) => ExpansionTileState(),),
+      ChangeNotifierProvider(create: (context) => AuthController(),),
+
     ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

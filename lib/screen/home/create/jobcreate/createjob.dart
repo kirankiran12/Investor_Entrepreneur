@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:investorentrepreneur/models/job_model.dart';
 import 'package:investorentrepreneur/screen/home/create/jobcreate/donejob.dart';
-
+import 'package:investorentrepreneur/services/job_service.dart';
 import 'package:investorentrepreneur/widget/custom_elevated_button.dart';
 import 'package:investorentrepreneur/widget/custom_textformfield.dart';
 
@@ -12,6 +14,8 @@ class CreateJob extends StatefulWidget {
 }
 
 class _CreateJobState extends State<CreateJob> {
+  final FirestoreServiceJob _firestoreServiceJob = FirestoreServiceJob();
+
   final TextEditingController jobtitleController = TextEditingController();
   final TextEditingController workplaceController = TextEditingController();
   final TextEditingController jobshiftController = TextEditingController();
@@ -21,9 +25,10 @@ class _CreateJobState extends State<CreateJob> {
   final languageController = TextEditingController();
   final locationController = TextEditingController();
   final jobtypeController = TextEditingController();
-  final selectlocationController = TextEditingController();
+
   final writeocationController = TextEditingController();
   final descriptionController = TextEditingController();
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,32 +48,35 @@ class _CreateJobState extends State<CreateJob> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,size: 20,),
-          onPressed: (){
-          Navigator.pop(context);
-        },),
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+          ),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: screenWidth * 0.05,
-            vertical: screenHeight * 0.03,
-          ),
-          child: Column(
-            children: [
+            padding: EdgeInsets.symmetric(
+              horizontal: screenWidth * 0.05,
+              vertical: screenHeight * 0.03,
+            ),
+            child: Column(children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Job Title*',
+                      'Job Title',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                     context: context,
                     controller: jobtitleController,
@@ -100,7 +108,7 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                     context: context,
                     controller: workplaceController,
@@ -125,7 +133,7 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                     context: context,
                     controller: jobshiftController,
@@ -149,7 +157,7 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                     context: context,
                     controller: experienceController,
@@ -175,11 +183,11 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                       context: context,
                       controller: salaryController,
-                      hint: r'$20,000_$30,000',
+                      hint: 'Select Salary range',
                       options: [
                         r'$30,000_$50,000',
                         r'$50,000_$80,000',
@@ -198,11 +206,11 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                       context: context,
                       controller: travelTimeController,
-                      hint: '',
+                      hint: 'Select Travel',
                       options: [
                         "No travel",
                         "Occasional travel",
@@ -216,17 +224,17 @@ class _CreateJobState extends State<CreateJob> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'English',
+                      'Language',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   _buildDropdownField(
                       context: context,
-                      controller: salaryController,
-                      hint: '',
+                      controller: languageController,
+                      hint: 'Select Language',
                       options: [
                         "English",
                         "Spanish",
@@ -239,17 +247,18 @@ class _CreateJobState extends State<CreateJob> {
                   const Align(
                     alignment: Alignment.centerLeft,
                     child: Text(
-                      'Full time',
+                      'Job Type',
                       style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
                   ),
+                    const SizedBox(height: 10),
                   _buildDropdownField(
                       context: context,
                       controller: jobtypeController,
-                      hint: '',
+                      hint: 'SelectJobtype',
                       options: [
                         "Full time",
                         "Part time",
@@ -269,9 +278,9 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   CustomTextFormField(
-                    controller: selectlocationController,
+                    controller: locationController,
                     hint: 'Select location',
                     suffixIcon: Icon(
                       Icons.location_on_outlined,
@@ -293,7 +302,7 @@ class _CreateJobState extends State<CreateJob> {
                           fontWeight: FontWeight.bold,
                           color: Colors.black),
                     ),
-                  ),
+                  ),const SizedBox(height: 10),
                   CustomTextFormField(
                     controller: descriptionController,
                     maxLines: 3,
@@ -302,22 +311,78 @@ class _CreateJobState extends State<CreateJob> {
                   const SizedBox(height: 15),
                   Center(
                     child: CustomElevatedButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => JobdoneScreen()));
+                      isLoading: isLoading,
+                      onPressed: () async {
+                        if (_validateForm()) {
+                          setState(() {
+                            isLoading = true;
+                          });
+
+                          DocumentReference docRef = FirebaseFirestore.instance
+                              .collection('job')
+                              .doc();
+                          Job job = Job(
+                            id: docRef.id.toString(),
+                            jobtitle: jobtitleController.text,
+                            workplace: workplaceController.text,
+                            jobshift: jobshiftController.text,
+                            experience: experienceController.text,
+                            salary: salaryController.text,
+                            description: descriptionController.text,
+                            traveltime: travelTimeController.text,
+                            selectLocation: locationController.text,
+                            writeLocation: languageController.text,
+                            jobtype: jobtypeController.text,
+                            language: languageController.text,
+                            location: locationController.text,
+                          );
+                          await _firestoreServiceJob.addJob(job).then((value) {
+                            setState(() {
+                              isLoading = false;
+                            });
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => JobdoneScreen()));
+                          }).onError((error, stackTrace) {
+                            print(error.toString());
+                            setState(() {
+                              isLoading = false;
+                            });
+                          });
+                        }
                       },
                       text: 'Post job',
                     ),
-                  ),
+                  )
                 ],
               ),
-            ],
-          ),
-        ),
+            ])),
       ),
     );
+  }
+
+  bool _validateForm() {
+    if (jobtitleController.text.isEmpty ||
+        workplaceController.text.isEmpty ||
+        jobshiftController.text.isEmpty ||
+        experienceController.text.isEmpty ||
+        salaryController.text.isEmpty ||
+        descriptionController.text.isEmpty ||
+        travelTimeController.text.isEmpty ||
+        jobtypeController.text.isEmpty ||
+        locationController.text.isEmpty ||
+        writeocationController.text.isEmpty ||
+        languageController.text.isEmpty ||
+        locationController.text.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Please fill all required fields"),
+        ),
+      );
+      return false;
+    }
+    return true;
   }
 
   Widget _buildDropdownField({
@@ -331,6 +396,11 @@ class _CreateJobState extends State<CreateJob> {
       controller: controller,
       decoration: InputDecoration(
         hintText: hint,
+        hintStyle: TextStyle(
+      
+          color: Colors.grey, 
+          fontSize: 14,
+        ),
         suffixIcon: const Icon(Icons.keyboard_arrow_down),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

@@ -1,7 +1,7 @@
 import 'dart:io';
-import 'package:firebase_storage/firebase_storage.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:investorentrepreneur/models/events_model.dart';
@@ -19,8 +19,10 @@ class CreateEvent extends StatefulWidget {
 }
 
 class _CreateEventState extends State<CreateEvent> {
+
   final FirestoreService _firestoreService = FirestoreService();
-  final FirebaseStorageService _firebaseStorageService = FirebaseStorageService();
+  final FirebaseStorageService _firebaseStorageService =FirebaseStorageService();
+
   final TextEditingController titleController = TextEditingController();
   final eventcategoryController = TextEditingController();
   final dateController = TextEditingController();
@@ -71,10 +73,14 @@ class _CreateEventState extends State<CreateEvent> {
           ),
         ),
         leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new_rounded,size: 20,),
-          onPressed: (){
+          icon: Icon(
+            Icons.arrow_back_ios_new_rounded,
+            size: 20,
+          ),
+          onPressed: () {
             Navigator.pop(context);
-          },),
+          },
+        ),
       ),
       body: SingleChildScrollView(
         child: Padding(
@@ -107,54 +113,54 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                   child: _imageFile == null
                       ? Center(
-                    child: Icon(
-                      Icons.add_a_photo,
-                      size: 50,
-                      color: Colors.grey,
-                    ),
-                  )
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 50,
+                            color: Colors.grey,
+                          ),
+                        )
                       : Image.file(
-                    _imageFile!,
-                    fit: BoxFit.cover,
-                  ),
+                          _imageFile!,
+                          fit: BoxFit.cover,
+                        ),
                 ),
               ),
               const SizedBox(height: 15),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Event title*',
+                  'Event Title',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
+              ),const SizedBox(height: 10),
               CustomTextFormField(
                 controller: titleController,
-                hint: 'Event title',
+                hint: '  Event Title',
               ),
               const SizedBox(height: 15),
               const Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'Event type*',
+                  'Event type',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               _buildDropdownField(
                 context: context,
                 controller: eventtypeController,
-                hint: 'Event type*',
+                hint: ' Select Event type',
                 options: [
                   "Trade show",
                   "Seminar",
                   "Workshope",
-                     "other(please specfiy)"
+                  "other(please specfiy)"
                 ],
                 label: 'Select Event type',
               ),
@@ -168,12 +174,15 @@ class _CreateEventState extends State<CreateEvent> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
-
-               TextFormField(
+              ),const SizedBox(height: 10),
+              TextFormField(
                 controller: dateController,
                 decoration: InputDecoration(
                   hintText: 'Select Date',
+                  hintStyle: TextStyle(
+                    color: Colors.grey,
+                    fontSize: 14,
+                  ),
                   suffixIcon: Icon(
                     Icons.calendar_today,
                     color: Colors.blue,
@@ -208,7 +217,7 @@ class _CreateEventState extends State<CreateEvent> {
                 },
               ),
               const SizedBox(height: 15),
-              const SizedBox(height: 15),
+            
               Row(
                 children: [
                   const Text(
@@ -218,7 +227,7 @@ class _CreateEventState extends State<CreateEvent> {
                         fontWeight: FontWeight.bold,
                         color: Colors.black),
                   ),
-                  const SizedBox(width: 80),
+                  const SizedBox(width: 90),
                   const Text(
                     'End Time*',
                     style: TextStyle(
@@ -228,6 +237,7 @@ class _CreateEventState extends State<CreateEvent> {
                   ),
                 ],
               ),
+              const SizedBox(height: 10),
               Row(
                 children: [
                   Expanded(
@@ -235,6 +245,10 @@ class _CreateEventState extends State<CreateEvent> {
                       controller: starttimeController,
                       decoration: InputDecoration(
                         hintText: 'Select Start Time',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
                         suffixIcon: Icon(Icons.access_time),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -258,8 +272,7 @@ class _CreateEventState extends State<CreateEvent> {
                           initialTime: TimeOfDay.now(),
                         );
                         if (pickedTime != null) {
-                          starttimeController.text =
-                              pickedTime.format(context);
+                          starttimeController.text = pickedTime.format(context);
                         }
                       },
                     ),
@@ -270,6 +283,10 @@ class _CreateEventState extends State<CreateEvent> {
                       controller: endtimeController,
                       decoration: InputDecoration(
                         hintText: 'Select End Time',
+                        hintStyle: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 14,
+                        ),
                         suffixIcon: Icon(Icons.access_time),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(
@@ -293,14 +310,13 @@ class _CreateEventState extends State<CreateEvent> {
                           initialTime: TimeOfDay.now(),
                         );
                         if (pickedTime != null) {
-                          endtimeController.text =
-                              pickedTime.format(context);
+                          endtimeController.text = pickedTime.format(context);
                         }
                       },
                     ),
                   ),
                 ],
-              ),
+              ),const SizedBox(height: 15),
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -311,7 +327,7 @@ class _CreateEventState extends State<CreateEvent> {
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               CustomTextFormField(
                 controller: descriptionController,
                 maxLines: 3,
@@ -328,11 +344,11 @@ class _CreateEventState extends State<CreateEvent> {
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               _buildDropdownField(
                 context: context,
                 controller: eventcategoryController,
-                hint: 'Event category*',
+                hint: 'Select Event category',
                 options: [
                   "Tech&Entrepreneur",
                   "Tech&Investor",
@@ -350,7 +366,7 @@ class _CreateEventState extends State<CreateEvent> {
                 ],
                 label: 'Select Event category',
               ),
-              const SizedBox(height: 15),
+             
               const SizedBox(height: 15),
               const Align(
                 alignment: Alignment.centerLeft,
@@ -361,7 +377,7 @@ class _CreateEventState extends State<CreateEvent> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
+              ),const SizedBox(height: 10),
               CustomTextFormField(
                 controller: selectlocationController,
                 hint: 'Select location',
@@ -370,7 +386,7 @@ class _CreateEventState extends State<CreateEvent> {
                   color: Colors.blue,
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               CustomTextFormField(
                 controller: writelocationController,
                 hint: 'Write location',
@@ -386,11 +402,11 @@ class _CreateEventState extends State<CreateEvent> {
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               _buildDropdownField(
                 context: context,
                 controller: formatController,
-                hint: 'Event hybrid*',
+                hint: 'Select Event format',
                 options: [
                   "in-person",
                   "virtual",
@@ -401,7 +417,7 @@ class _CreateEventState extends State<CreateEvent> {
                 label: 'Select Event format',
               ),
               const SizedBox(height: 15),
-              const SizedBox(height: 15),
+            
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
@@ -411,11 +427,11 @@ class _CreateEventState extends State<CreateEvent> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
+              ),const SizedBox(height: 10),
               _buildDropdownField(
                 context: context,
                 controller: networkingController,
-                hint: 'speed Networking',
+                hint: 'Select Networking Opportunities',
                 options: [
                   "speed Networking"
                       "in-person",
@@ -438,11 +454,11 @@ class _CreateEventState extends State<CreateEvent> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
+              ),const SizedBox(height: 10),
               _buildDropdownField(
                   context: context,
                   controller: tickettypeController,
-                  hint: 'Basic',
+                  hint: 'Select ticket type',
                   options: [
                     "Basic",
                     "Vip",
@@ -460,11 +476,11 @@ class _CreateEventState extends State<CreateEvent> {
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
-              ),
+              ),const SizedBox(height: 10),
               _buildDropdownField(
                   context: context,
                   controller: eventdurationController,
-                  hint: 'half day',
+                  hint: 'Select Event duration',
                   options: [
                     "half day",
                     "Full day",
@@ -480,18 +496,18 @@ class _CreateEventState extends State<CreateEvent> {
               Align(
                 alignment: Alignment.centerLeft,
                 child: Text(
-                  'No of people attended*',
+                  'No of people attended',
                   style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.bold,
                       color: Colors.black),
                 ),
               ),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               _buildDropdownField(
                   context: context,
                   controller: attendedController,
-                  hint: 'less then 20',
+                  hint: 'Select No of people attended',
                   options: [
                     'less then 20',
                     'less then 50',
@@ -502,45 +518,46 @@ class _CreateEventState extends State<CreateEvent> {
               const SizedBox(height: 15),
               const SizedBox(height: 30),
               CustomElevatedButton(
-                 isLoading: isLoading,
-                onPressed: () async{
-                   if(_validateForm()){
-                     setState(() {
-                       isLoading = true;
-                     });
-                     String? imageUrl = await _firebaseStorageService.uploadImage(_imageFile!);
-                     DocumentReference docRef = FirebaseFirestore.instance.collection('events').doc();
-                     Event event = Event(
-                       id: docRef.id.toString(),
-                       title: titleController.text,
-                       eventType: eventtypeController.text,
-                       date: dateController.text,
-                       startTime: starttimeController.text,
-                       endTime: endtimeController.text,
-                       description: descriptionController.text,
-                       eventCategory: eventcategoryController.text,
-                       selectLocation: selectlocationController.text,
-                       writeLocation: writelocationController.text,
-                       eventFormat: formatController.text,
-                       networkingOpportunities: networkingController.text,
-                       ticketType: tickettypeController.text,
-                       eventDuration: eventdurationController.text,
-                       numberOfPeopleAttended: attendedController.text,
-                       imageUrl: imageUrl!
-                     );
-                     await _firestoreService.addEvent(event).then((value){
-                       setState(() {
-                         isLoading = false;
-                       });
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=>Eventdone()));
-                     }).onError((error, stackTrace){
-                       print(error.toString());
-                       setState(() {
-                         isLoading = false;
-                       });
-                     });
-
-                   }
+                isLoading: isLoading,
+                onPressed: () async {
+                  if (_validateForm()) {
+                    setState(() {
+                      isLoading = true;
+                    });
+                    String? imageUrl =
+                        await _firebaseStorageService.uploadImage(_imageFile!);
+                    DocumentReference docRef =
+                        FirebaseFirestore.instance.collection('events').doc();
+                    Event event = Event(
+                        id: docRef.id.toString(),
+                        title: titleController.text,
+                        eventType: eventtypeController.text,
+                        date: dateController.text,
+                        startTime: starttimeController.text,
+                        endTime: endtimeController.text,
+                        description: descriptionController.text,
+                        eventCategory: eventcategoryController.text,
+                        selectLocation: selectlocationController.text,
+                        writeLocation: writelocationController.text,
+                        eventFormat: formatController.text,
+                        networkingOpportunities: networkingController.text,
+                        ticketType: tickettypeController.text,
+                        eventDuration: eventdurationController.text,
+                        numberOfPeopleAttended: attendedController.text,
+                        imageUrl: imageUrl!);
+                    await _firestoreService.addEvent(event).then((value) {
+                      setState(() {
+                        isLoading = false;
+                      });
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => Eventdone()));
+                    }).onError((error, stackTrace) {
+                      print(error.toString());
+                      setState(() {
+                        isLoading = false;
+                      });
+                    });
+                  }
                 },
                 text: 'Publish Event',
               ),
@@ -550,6 +567,7 @@ class _CreateEventState extends State<CreateEvent> {
       ),
     );
   }
+
   bool _validateForm() {
     if (titleController.text.isEmpty ||
         eventtypeController.text.isEmpty ||
@@ -572,6 +590,7 @@ class _CreateEventState extends State<CreateEvent> {
     }
     return true;
   }
+
   Widget _buildDropdownField({
     required BuildContext context,
     required TextEditingController controller,
@@ -583,6 +602,10 @@ class _CreateEventState extends State<CreateEvent> {
       controller: controller,
       decoration: InputDecoration(
         hintText: hint,
+        hintStyle: TextStyle(
+          color: Colors.grey,
+          fontSize: 14,
+        ),
         suffixIcon: const Icon(Icons.keyboard_arrow_down),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(

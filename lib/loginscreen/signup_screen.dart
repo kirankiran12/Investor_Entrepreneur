@@ -23,12 +23,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final passwordController = TextEditingController();
   final nameController = TextEditingController();
   bool isChecked = false;
+  bool _obscureText1 = false;
   String selectedRole = "";
+
   String? emailError;
   String? passwordError;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Google Sign-In
   Future<UserCredential?> loginWithGoogle() async {
     try {
       final googleUser = await GoogleSignIn().signIn();
@@ -43,19 +44,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return null;
   }
 
-  // Email Validation
   bool isValidEmail(String email) {
     String emailPattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
     RegExp regExp = RegExp(emailPattern);
     return regExp.hasMatch(email);
   }
 
-  // Password Validation
   bool isValidPassword(String password) {
     return password.length >= 6;
   }
 
-  // Sign Up User
   void signUpUser() {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
@@ -89,7 +87,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         .then((value) {
       Fluttertoast.showToast(msg: "Sign Up Successful!");
 
-   
       if (selectedRole == "Entrepreneur") {
         Navigator.pushReplacement(
           context,
@@ -141,13 +138,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 controller: emailController,
                 hint: 'Email',
                 errorText: emailError,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your email';
+                  }
+                  if (!RegExp(r'^[^@]+@[^@]+\.[^@]+').hasMatch(value)) {
+                    return 'Please enter a valid email';
+                  }
+                  return null;
+                },
               ),
               const SizedBox(height: 20),
               CustomTextFormField(
                 controller: passwordController,
                 hint: 'Password',
-                obscureText: true,
+                obscureText: _obscureText1,
                 errorText: passwordError,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter your password';
+                  }
+                  if (value.length < 6) {
+                    return 'Password must be at least 6 characters';
+                  }
+                  return null;
+                },
+                suffixIcon: IconButton(
+                  icon: Icon(
+                    _obscureText1 ? Icons.visibility : Icons.visibility_off,
+                    size: 15,
+                  ),
+                  onPressed: () {
+                    setState(() {
+                      _obscureText1 = !_obscureText1;
+                    });
+                  },
+                ),
               ),
               const SizedBox(height: 20),
               Text(
@@ -212,7 +238,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 spacing: 15,
                 runSpacing: 10,
                 children: [
-                CircleAvatar(
+                  CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.grey[200],
                     child: Image.asset('assets/images/instagram.png'),
@@ -275,23 +301,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  // Widget _buildRoleButton(
-  //     String text, bool isSelected, VoidCallback onPressed) {
-  //   return GestureDetector(
-  //     onTap: onPressed,
-  //     child: Container(
-  //       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-  //       decoration: BoxDecoration(
-  //         color: isSelected ? Colors.blue : Colors.grey[300],
-  //         borderRadius: BorderRadius.circular(10),
-  //       ),
-  //       child: Text(text,
-  //           style: TextStyle(
-  //               color: isSelected ? Colors.white : Colors.black,
-  //               fontWeight: FontWeight.bold)),
-  //     ),
-  //   );
-   Widget _buildRoleButton(
+  Widget _buildRoleButton(
       String text, bool isSelected, VoidCallback onPressed) {
     return GestureDetector(
       onTap: onPressed,
@@ -321,5 +331,4 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-  }
-
+}
